@@ -1,0 +1,657 @@
+schema_version: '1.1'
+prompt_set_id: paper15-benchmark-pilot-v1
+status: frozen
+selection_protocol:
+  purpose: Pilot stratification for inference-time length and latency uncertainty
+  created_date: '2026-07-18'
+  counts:
+    AlpacaEval: 6
+    MT-Bench: 4
+    IFEval: 3
+    LongBench-E: 3
+  longbench_input_bands:
+  - 0_4k
+  - 4_8k
+  - 8k_plus
+  notes:
+  - MT-Bench uses first-turn prompts only.
+  - LongBench-E prompts use the official dataset-specific templates.
+  - Expected output classes are design labels, not enforced token limits.
+sources:
+  AlpacaEval:
+    url: https://huggingface.co/datasets/tatsu-lab/alpaca_eval
+    revision: 57530fed23a308e771c06bba55cb49b7e7625711
+  MT-Bench:
+    url: https://github.com/lm-sys/FastChat/blob/main/fastchat/llm_judge/data/mt_bench/question.jsonl
+  IFEval:
+    url: https://github.com/google-research/google-research/tree/master/instruction_following_eval
+  LongBench-E:
+    url: https://huggingface.co/datasets/zai-org/LongBench
+    revision: 5e628be450b7e67fb7ae6e201bd6d8f7056f7672
+  source_file_sha256:
+    alpaca_eval: d92b92c51e8f1962a21193abe74e6f727c2bc8286035f4041505ff38a7c3ae51
+    mt_bench: 119565adbab82227089cefdb44c8d7e2cf04dc0a0ec233634c82e7d4e2a944f7
+    ifeval: 67ffeee0fcb87c317c5b08a2de85557b4a7e96ada6178aa645b4954fe4b53d49
+    longbench_templates: 56d22ad4f382169c2b8a11ff4c982a4a1bea096c8152b0f0b85b64686b157c30
+    longbench_multifieldqa_en_e: 678a51335e3c90e0dd43bf1131045e4f2859cc693e7eded89cc6a1ee8d18faff
+    longbench_qasper_e: 97d95c01221a17a2ce51f9180d65a671bf2998504a2ff0cccffe97e9b08444d8
+    longbench_gov_report_e: 0a3902fcf3d49f228549f02a2ef1ae84dbe8578b8be3d4611d54459487bdef84
+  license_note: Consult each upstream repository and underlying dataset terms before redistribution.
+prompts:
+- prompt_id: alpaca_0100_recipe
+  task_type: open_instruction
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-100
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    dataset: helpful_base
+    split: eval
+  text_sha256: 4dd9df0d3d6f82a5bc85ab8cf448ee2069b460a7ba55117d7b1fb67c4757bed7
+  text: I like to host guests at my home from time to time, and I am gathering  recipes of different dishes and drinks to
+    keep things interesting. I am interested in trying some Indonesian dishes. Can you give me a recipe for Tahu Gejrot Cirebon?
+- prompt_id: alpaca_0300_pygame
+  task_type: coding
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-300
+  input_length_class: short
+  expected_output_class: medium_long
+  source_metadata:
+    dataset: oasst
+    split: eval
+  text_sha256: 99619b0fb32a814bd32733869fd4e3e47d0ab197298ffb16b54e26fbdbf0a5dd
+  text: How would a basic project in PyGame look like? I'd like the example to include keyboard event handling so that pressing
+    ESC will quit the game and also print the FPS counter in the left top corner of the window.
+- prompt_id: alpaca_0450_problem_analysis
+  task_type: reasoning
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-450
+  input_length_class: short
+  expected_output_class: long
+  source_metadata:
+    dataset: oasst
+    split: eval
+  text_sha256: f9cb6fbddef90950e4f8b0b487ac46244a151a42ca71dcfd3a7c03517220c45d
+  text: 'Using critical thinking methods, how would you approach and solve the following problem: A local restaurant is experiencing
+    a decrease in customers, and the owner wants to understand the cause and find a solution. What steps would you take to
+    gather information, analyze the situation, and develop potential solutions?'
+- prompt_id: alpaca_0550_git_conflicts
+  task_type: coding
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-550
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    dataset: selfinstruct
+    split: eval
+  text_sha256: a226f463a9b5346b6f8686012bd4e1f46a95407ee2fe055be4510410a902a639
+  text: Write a step-by-step guide for resolving GitHub merge conflicts.
+- prompt_id: alpaca_0750_sports_commentary
+  task_type: creative_writing
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-750
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    dataset: vicuna
+    split: eval
+  text_sha256: 800fa6b21fbc4e64f096c1665d43a46aa2cc3d4434394f91288c5179d9b3b548
+  text: As a sports commentator, describe the winning play in the final seconds of a championship game.
+- prompt_id: alpaca_0800_jazz_script
+  task_type: creative_writing
+  source: AlpacaEval
+  source_version: 57530fed23a308e771c06bba55cb49b7e7625711
+  source_item_id: eval-index-800
+  input_length_class: short
+  expected_output_class: long
+  source_metadata:
+    dataset: vicuna
+    split: eval
+  text_sha256: 27bc6c9f15df8b758e23adcfd23b6743f5b1abb6b7251ce23a9a45eb1342a9a7
+  text: Write a script for a YouTube video exploring the history and cultural significance of jazz.
+- prompt_id: mtbench_0081_writing
+  task_type: creative_writing
+  source: MT-Bench
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '81'
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    category: writing
+    turn: 1
+  text_sha256: ae0703a93d5816aaeadc9bb86cf60a81a2f6b4b7ae3474a4969ee2829b7f3e98
+  text: Compose an engaging travel blog post about a recent trip to Hawaii, highlighting cultural experiences and must-see
+    attractions.
+- prompt_id: mtbench_0105_reasoning
+  task_type: reasoning
+  source: MT-Bench
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '105'
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    category: reasoning
+    turn: 1
+  text_sha256: df18b2932dc6f634d7ebae312bd5a2156c0abf0050137a29542240845570593f
+  text: |-
+    Read the below passage carefully and answer the questions with an explanation:
+    At a small company, parking spaces are reserved for the top executives: CEO, president, vice president, secretary, and treasurer with the spaces lined up in that order. The parking lot guard can tell at a glance if the cars are parked correctly by looking at the color of the cars. The cars are yellow, green, purple, red, and blue, and the executives' names are Alice, Bert, Cheryl, David, and Enid.
+    * The car in the first space is red.
+    * A blue car is parked between the red car and the green car.
+    * The car in the last space is purple.
+    * The secretary drives a yellow car.
+    * Alice's car is parked next to David's.
+    * Enid drives a green car.
+    * Bert's car is parked between Cheryl's and Enid's.
+    * David's car is parked in the last space.
+    Question: What is the name of the secretary?
+- prompt_id: mtbench_0115_math
+  task_type: math
+  source: MT-Bench
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '115'
+  input_length_class: short
+  expected_output_class: short
+  source_metadata:
+    category: math
+    turn: 1
+  text_sha256: 64c35abdb84e9ba809122fd3ca60e5478cfdd36a6c6642a8ed951c3539ccfb32
+  text: Some people got on a bus at the terminal. At the first bus stop, half of the people got down and 4 more people got
+    in. Then at the second bus stop, 6 people got down and 8 more got in. If there were a total of 25 people heading to the
+    third stop, how many people got on the bus at the terminal?
+- prompt_id: mtbench_0121_coding
+  task_type: coding
+  source: MT-Bench
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '121'
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    category: coding
+    turn: 1
+  text_sha256: c689db0522c75b449c3daafce88b1b97c1893c09513e2f33fa6f0a47c1cc3bef
+  text: Develop a Python program that reads all the text files under a directory and returns top-5 words with the most number
+    of occurrences.
+- prompt_id: ifeval_1001_no_comma
+  task_type: constrained_writing
+  source: IFEval
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '1001'
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    instruction_ids:
+    - punctuation:no_comma
+  text_sha256: 73a3a80767f020eb34e4e0a90c2910e80ac824fbac3f98c8fe4fa352e4fa3311
+  text: I am planning a trip to Japan, and I would like thee to write an itinerary for my journey in a Shakespearean style.
+    You are not allowed to use any commas in your response.
+- prompt_id: ifeval_1069_long_email
+  task_type: constrained_writing
+  source: IFEval
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '1069'
+  input_length_class: short
+  expected_output_class: long
+  source_metadata:
+    instruction_ids:
+    - keywords:existence
+    - length_constraints:number_words
+    - punctuation:no_comma
+  text_sha256: dfc3b4a55b4956edd8641d84671273afe0fce7bc51de9362559aff5bec6e406a
+  text: Write a long email template that invites a group of participants to a meeting, with at least 500 words. The email
+    must include the keywords "correlated" and "experiencing" and should not use any commas.
+- prompt_id: ifeval_1075_json_ad
+  task_type: structured_output
+  source: IFEval
+  source_version: official-main-retrieved-2026-07-18
+  source_item_id: '1075'
+  input_length_class: short
+  expected_output_class: medium
+  source_metadata:
+    instruction_ids:
+    - detectable_format:json_format
+  text_sha256: eaa884fe78cfb86af89d33fdf5effd81bb0646ae6062e5208314a096600f4fe5
+  text: Can you help me make an advertisement for a new product? It's a diaper that's designed to be more comfortable for
+    babies and I want the entire output in JSON format.
+- prompt_id: longbench_mfqa_0_4k
+  task_type: document_qa
+  source: LongBench-E
+  source_version: 5e628be450b7e67fb7ae6e201bd6d8f7056f7672
+  source_item_id: b41aef2d0475f46a78a3168c6c8a614170975f82507cf2e4
+  input_length_class: 0_4k
+  expected_output_class: short
+  source_metadata:
+    dataset: multifieldqa_en_e
+    row_index: 65
+    benchmark_length: 2490
+    context_characters: 14177
+    language: en
+  text_sha256: b4616344cf89e1fdb22aa98e2076bc11786e11b4bf8955a7ddd537f0e7de87ea
+  text: |-
+    Read the following text and answer briefly.
+
+    LOL Anonymous I'm here! & I did answer you back there.
+    kl el kotb el qadema (tawrat + enjel + 9o7f ibrahem) 7orfat w t'3ayarat.. law ma 9ar hal shy chan ma 6ala3 ktab yded ye;3y elly gablah l7ad ma 6ala3 lna el quraan b norah elly allah 7f'6ah don ta7ref w tabdel ela yom el dein .. shlon tyeeb Joan shy ma5ooth 5erah?!
+    1- Imagine you have two individuals. One truly believes in God but he is a bad husband and father who cheats on his wife and neglects his children. The other man is a nonbeliever; he accepts religion in theory and doctrine but simply does not have faith no matter how hard he tried. He is a good father and a good husband as well. When they stand before God at the Day of Judgment, would the nonbeliever be condemned to eternal hell only for that one flaw in him? Don't the other good traits in that person matter at all? Does being a nonbeliever equal being evil?
+    2-God knows everything. However, why would He have created when He knows exactly what each person is going to do and where they will end up? For example, let us suppose that tomorrow I will murder someone. God knows that I will do that. And He knows that I will suffer in hell when the time comes. So why does He purposely inflict that pain on me? To teach me a lesson? He knows the outcome of everything and everyone He has created.
+    3-Since you brought up science in the previous comments section, I am seriously curious (I am not trying to be glib) about dinosaurs and prehistoric humans. We have seen the evolution of humans and we have fossils and hard evidence of it. The science world has traced back "Eve" to Africa. The concept of Adam and Eve seems too mythological to be 100% factual. It has the same tone of Greek and Ancient Egyptian legends.
+    -Note: I am not trying to corner you here, I just want to know your response to my queries and thoughts. Thanks.
+    _ ولماذا نصلى ولمن نصلى .. انى لا ارى لصلاتكم هذه اى حكمه ولماذا كل تلك الحركات اما كان يكفى الخشوع..
+    اعتقد ان المشكلة ليست كما ذكرت..فما ذكرته يعني ان هناك العديد من المسائل الفقهية المتصلة بالعصر الجديد دون حل. على العكس, فالحلال بين والحرام بين. اعتقد المشكلة تكمن بالمسلمين الذين اصابهم الوهن.
+    You'll be answerd personaly only if; you comment with your blogger's name/nick.
+    I answered you before & there was no response from your behalf. Why would you think you're worth an answer from me since you can seek answers from good books?
+    Your questions are very simple, with clean cut answers. Don't use the word corner; it indicates things you don't have the first alphabet for!
+    Religion was established to calm our fears from the unknown. Freud did write about it in the father figure argument. Try to read it.
+    I deleted my last comment because in the end of it I inserted some thing that may offend some people (if you read it, I gauss you know what I mean). Abraham did not believe in God until he saw the birds come to life. So, all what I want is a single prove similar to Abraham.
+    I indeed busy doing my homework; I have to solve the energy equation and the continuity equation to come with another, hopefully, exact solution to the problem.
+    Do you work? I mean do you have a job, it seems that you are always on line!!!???? It is amazing how some one would stick to the internet. Try to go out more often, play sport or find any other hobby. If you could not disattach yourself from the internet try and seek a professional help… :-). Honestly, I’m not making fun of you it is just an advice… sincere advice.
+    I measure prosperity of a nation by the degree of its civilization in comparison to others of its time. Islamic civilization was at the peak during the Umayyad and Abbasid reigns, at the time when Moslems conquered other nations and dying civilizations, and mixed with them, and the new comers in Islam started researching for the truth. In their quest they translated Greek philosophy books and dug into ancient ones. Their search for truth led them to the emergence of chemistry, Algebra and other sciences And their findings excelled them in innovative inventions. The maps and astrolabes that Columbus used to sail on his quest to discover the West years later were taken from the Arabs. And in contrary to the scribbles of their holy book, Arabic books were the first that brought the roundedness of earth to world attention. Arabic language romanticized the rigid Latin, poetry and verse advanced. At one time, civilization was dubbed as Arabization in Andalusia and that was evident in Andalusia’s Christian and Jewish ancient books. Islamic Architecture and their aggregation systems portrayed marvels of their time. Islamic libraries were huge and rich for the European knowledge seekers.
+    And history tells us that those were the times when Moslems were the furthest from the dogma of their religion, there societies were open to controlled prostitution in the name of dancimng Jawari, and alcohol was openly consumed. We also notice in these periods that struggle for power among them mounted, yet they were the most tolerant to other nations and beliefs. There was nothing Islamic about them at that time, only a name. After that time, the Islamic civilization collapsed and kept deteriorating as people clung more to the their religious beliefs that were diverted through different interpretations.
+    And based on that; I believe that it’s not only Moslems who missread their religion, the problem stemmed from the core of the religion (Quran and tradition) for being vague and subject to different interpretations. If Quran was the true word of God, then it should have contained the miracle of not being subject to different interpretations, at least to keep Moslems united, and then, one would believe that Islam is suitable for every location and time.
+    Nothing can give a solid proof of the existence of heaven and hell, yet, nothing can disprove it either. Same goes to God. So the chance remain fifty-fifty. You either believe in it for the sake of taking a lesser risk if you don’t believe in blind faith, or discard it all together. Yet, the possibility is there until proved or disproved. As for now; these cases can only be understood through logic. So let’s reiterate your question and narrow it down to make it closer to something that can be measured.
+    Is there any mention of the stories of prophets outside the holy books? Are there any archeological evidences of each prophet’s reign (and I stress prophet’s)? Are there any mention of each prophet in history books outside its holy book, or the books that were based on it’s holy books? Ok, that was too general, let’s narrow it down a bit since your knowledge of your religion, mashallah, especially in reciting Quran is superb.
+    Is there any mention of the prophet Mohammad reign in non-Moslem history books other than those referenced to Moslem books? And if there were; did those stories mach? Did archeology of Mohammad’s time match those stories? Did ancient books of other nations confirm those stories? After all Mecca was an open, mid trade center for traders of the South and the North, and supposedly was exposed and open to other nations, and an emergence of a new religion would not have gone unnoticed in the ancient books of those nations.
+    That's why faith is called "FAITH" to believe in the unseen, you see.
+    keep in mind that every major religion has gone through various phases from emergence to growth to stagnation to depression and reformation. these are cycles that play out across centuries and i suspect islam is not immune to them.
+    islam is unique in that it is truly the last 'great' religion and it is here to stay. the future should be one of consilience and consolidation between religions and peoples.
+    at the end of the day - tolerance of thought will be the salvation of mankind.
+    I've been asking your first question for as long as I can remember and nobody has given me a convincing answer yet. I also asked the second question verbatim when I was in my high school's Tarbiya Islamiya class, and the teacher had no answer. I kept hounding him until the students yelled at me to shut up and then he kicked me out!
+    We're all adults here, so why can't you answer Anon's query? I still find it amazing that you named yourself after Saint Joan. A Christian (gasp!) who will burn in hell according to some of the comments here.
+    All men are my brothers. I would have liked to have said it then, and I would like to say it now: all men are my brothers. But all men are not my brothers. Why? Because all women are my sisters. And the brother who denies the rights of his sister: that brother is not my brother. At the very best, he is my half-brother - by definition. Osama is not my brother.
+    Religion is sensitive ground, as well it might be. Here we walk on eggshells. Because religion is itself an eggshell. Today, in the West, there are no good excuses for religious belief - unless we think that ignorance, reaction and sentimentality are good excuses. This is of course not so in the East, where, we acknowledge, almost every living citizen in many huge and populous countries is intimately defined by religious belief. The excuses, here, are very persuasive; and we duly accept that 'faith' - recently and almost endearingly defined as 'the desire for the approval of supernatural beings' - is a world-historical force and a world-historical actor. All religions, unsurprisingly, have their terrorists, Christian, Jewish, Hindu, even Buddhist. But we are not hearing from those religions. We are hearing from Islam.
+    Let us make the position clear. We can begin by saying, not only that we respect Muhammad, but that no serious person could fail to respect Muhammad - a unique and luminous historical being. Judged by the continuities he was able to set in motion, he remains a titanic figure, and, for Muslims, all-answering: a revolutionary, a warrior, and a sovereign, a Christ and a Caesar, 'with a Koran in one hand', as Bagehot imagined him, 'and a sword in the other'. Muhammad has strong claims to being the most extraordinary man who ever lived. And always a man, as he always maintained, and not a god. Naturally we respect Muhammad. But we do not respect Muhammad Atta.
+    Until recently it was being said that what we are confronted with, here, is 'a civil war' within Islam. That's what all this was supposed to be: not a clash of civilisations or anything like that, but a civil war within Islam. Well, the civil war appears to be over. And Islamism won it. The loser, moderate Islam, is always deceptively well-represented on the level of the op-ed page and the public debate; elsewhere, it is supine and inaudible. We are not hearing from moderate Islam. Whereas Islamism, as a mover and shaper of world events, is pretty well all there is.
+    So, to repeat, we respect Islam - the donor of countless benefits to mankind, and the possessor of a thrilling history. But Islamism? No, we can hardly be asked to respect a creedal wave that calls for our own elimination. More, we regard the Great Leap Backwards as a tragic development in Islam's story, and now in ours. Naturally we respect Islam. But we do not respect Islamism, just as we respect Muhammad and do not respect Muhammad Atta.
+    المؤامرات على الأديان وجميع الانقلابات المخربة والثورات على القيم والمبادئ خرجت من هذا التراث .. وان كل معول هدم كان وراءه توجيه يهودي.
+    •تذكروا أن الشعب الذي لا يهلك غيره يهلك نفسه.
+    •يجب ان نخلق الجيل الذي لا يخجل من كشف عورته (ألا تفسر لنا هذه الجملة موجة العرى في الافلام والموضات التى تسود العالم الآن).
+    .علينا ان نشعل حربا بين الشعوب ونضرب الدول بعضها ببعض فبهذا يصبح جميع المتحاربين في حاجة الى أموالنا فنفرض عليهم شروطنا.
+    •الجماهير عمياء فاشتروها بالمال وسوقوها كالبهائم الى أهدافكم.
+    •سيطروا على الانتخابات ووسائل الاعلام والصحافة (وهم قد سيطروا عليها بالمال والجنس والمرأة في الغرب الرأسمالي وبالحزب والسلطة في العالم الاشتراكي).
+    •ادفعوا الجماهير العمياء الى الثورة وسلموهم مقاليد الحكم ليحكموا في غوغائية وغباء (وقد فعلوا هذه في الثورة الفرنسية) وحينئذ نأتي نحن ونعدمهم فنكون منقذين للعالم (وقد اعدموهم جميعاً من روبسبير الى ميرابوا).
+    •ارفعوا شعار الحرية واهدموا بها الاخلاق والاسرة والقومية والوطنية.
+    .ارفعوا شعار العلم واهدموا به الدين .. وهذا ما فعله كمال أتاتورك (حفيد مزاراحي) حينما اقام الدولة العلمانية في تركيا ووقف يخطب في البرلمان التركي عام 1923 ساخراً من القرآن.
+    نحن الآن في القرن العشرين لا نستطيع ان نسير وراء كتاب تشريع يبحث عن التين والزيتون.
+    •الذي يعرقل مؤامراتكم اوقعوه في فضائح ثم هددوه بكشفها (وقد فعلوها في ووترجيت) او في مآزق مالية ثم تقدموا لانقاذه (وقد فعلها دزرائيلي مع الخديو واستولى على القنال).. وإذ تعذر الامر سارعوا الى اغتياله (وقد فعلوها بكنيدي) ثم اقتلوا قاتله لتدفنوا اسرارنا معه الى الأبد (وقد فعلوها بقاتل كنيدي).
+    •اقتلوا القوميات والوطنيات بالدعوة الى الاممية والمواطنة العالمية وقد فعلها ماركس في الشيوعية.
+    •كل ما عدا اليهود حيوانات ناطقة سخرها الله في خدمة اليهود.
+    واليهودية ترى ان الله واحد ولكنها تحتكره لنفسها فلا عمل لله الا الحفاظ على اسرائيل وتسخير جميع الشعوب لخدمتها.
+    واللاهوت اليهودي لا يؤمن بآخرة، وقد شطبوا كل ما جاء عن الآخرة في التوراة .. والقيامة عندهم هي قيامة دولتهم في فلسطين والبعث بعثها والنشر نشرها .. ويوم الحساب هو اليوم الذي يحاسبون فيه كل الأمم يوم يعود المسيح ويباركهم ويختارهم نواباً له في حكم العالم وإقامة ملكوت الله على الأرض .. والعجيب انهم كفروا بالمسيح حينما جاء ثم أعلنوا إيمانهم بعودته وشرطوا هذه العودة بانها رجعة من المسيح ليختارهم رؤساء وحكاماً للعالم الى الأبد.
+    والفكر اليهودي يلقى غلالة من الأسرار والطلاسم والكتمان والغموض على كل شئ .. والكبالا والسحر وعلم الأعداد والحروف وتسخير الشياطين من علومهم التى شغفوا بها وروجوها ونشروها.
+    وكانت وسيلتهم الى هدم الكتب السماوية هى تفسيرها بالتأويل وذلك برفض المعاني الظاهرة واختراع معان باطنة تهدم الغرض الديني وتفسد هدفه.
+    ونستطيع ان نرى اثر التوجيه الهودي في الفلسفات العبثية والدمية والمادية والفوضية والإباحية .. واحيانا نلمح اسماء يهودية خلفها مثل : سارتر – فرويد – ماركس – ماركوز.
+    واذا فتحنا ملف الديانة البهائية فإننا نجد اثر التوجيه اليهودي واضحا في كتبها.
+    عبد الهاء تأليف سليم قبعين القاهرة مطبعة العمران 1922.
+    مفواضات عبد البهاء الطبعة الاولى 1928م. موعود كل الامم.
+    جورج تاوزنه مطبوع بإذن من المحفل الروحاني لمصر والسودان.
+    •اكثر فلاسفة اليونان تعلموا الحكمة من بنى اسرائيل.
+    •رسالة عبد البهاء هي توحيد المسلمين والنصارى واليهود وجمعهم على أصل نواميس موسى.
+    •عمل موسى لا يس
+
+    Now, answer the following question based on the above text, only give me the answer and do not output any other words.
+
+    Question: Is there any evidence of heaven and hell?
+    Answer:
+- prompt_id: longbench_qasper_4_8k
+  task_type: scientific_qa
+  source: LongBench-E
+  source_version: 5e628be450b7e67fb7ae6e201bd6d8f7056f7672
+  source_item_id: 4c3b7745c2acb52f50e8b98d34a979d5927177c5fbe2952e
+  input_length_class: 4_8k
+  expected_output_class: short
+  source_metadata:
+    dataset: qasper_e
+    row_index: 199
+    benchmark_length: 5869
+    context_characters: 37385
+    language: en
+  text_sha256: 40a8cad7bb920b1d141b99bc79666f5b6bffcc42e8eecbe65c6aaa745753d06f
+  text: "You are given a scientific article and a question. Answer the question as concisely as you can, using a single phrase\
+    \ or sentence if possible. If the question cannot be answered based on the information in the article, write \"unanswerable\"\
+    . If the question is a yes/no question, answer \"yes\", \"no\", or \"unanswerable\". Do not provide any explanation.\n\
+    \nArticle: Introduction\nChatbots such as dialog and question-answering systems have a long history in AI and natural\
+    \ language processing. Early such systems were mostly built using markup languages such as AIML, handcrafted conversation\
+    \ generation rules, and/or information retrieval techniques BIBREF0 , BIBREF1 , BIBREF2 , BIBREF3 . Recent neural conversation\
+    \ models BIBREF4 , BIBREF5 , BIBREF6 are even able to perform open-ended conversations. However, since they do not use\
+    \ explicit knowledge bases and do not perform inference, they often suffer from generic and dull responses BIBREF5 , BIBREF7\
+    \ . More recently, BIBREF8 and BIBREF9 proposed to use knowledge bases (KBs) to help generate responses for knowledge-grounded\
+    \ conversation. However, one major weakness of all existing chat systems is that they do not explicitly or implicitly\
+    \ learn new knowledge in the conversation process. This seriously limits the scope of their applications. In contrast,\
+    \ we humans constantly learn new knowledge in our conversations. Even if some existing systems can use very large knowledge\
+    \ bases either harvested from a large data source such as the Web or built manually, these KBs still miss a large number\
+    \ of facts (knowledge) BIBREF10 . It is thus important for a chatbot to continuously learn new knowledge in the conversation\
+    \ process to expand its KB and to improve its conversation ability.\nIn recent years, researchers have studied the problem\
+    \ of KB completion, i.e., inferring new facts (knowledge) automatically from existing facts in a KB. KB completion (KBC)\
+    \ is defined as a binary classification problem: Given a query triple, ( INLINEFORM0 , INLINEFORM1 , INLINEFORM2 ), we\
+    \ want to predict whether the source entity INLINEFORM3 and target entity INLINEFORM4 can be linked by the relation INLINEFORM5\
+    \ . However, existing approaches BIBREF11 , BIBREF12 , BIBREF13 , BIBREF14 , BIBREF15 , BIBREF16 solve this problem under\
+    \ the closed-world assumption, i.e., INLINEFORM6 , INLINEFORM7 and INLINEFORM8 are all known to exist in the KB. This\
+    \ is a major weakness because it means that no new knowledge or facts may contain unknown entities or relations. Due to\
+    \ this limitation, KBC is clearly not sufficient for knowledge learning in conversations because in a conversation, the\
+    \ user can say anything, which may contain entities and relations that are not already in the KB.\nIn this paper, we remove\
+    \ this assumption of KBC, and allow all INLINEFORM0 , INLINEFORM1 and INLINEFORM2 to be unknown. We call the new problem\
+    \ open-world knowledge base completion (OKBC). OKBC generalizes KBC. Below, we show that solving OKBC naturally provides\
+    \ the ground for knowledge learning and inference in conversations. In essence, we formulate an abstract problem of knowledge\
+    \ learning and inference in conversations as a well-defined OKBC problem in the interactive setting.\nFrom the perspective\
+    \ of knowledge learning in conversations, essentially we can extract two key types of information, true facts and queries,\
+    \ from the user utterances. Queries are facts whose truth values need to be determined. Note that we do not study fact\
+    \ or relation extraction in this paper as there is an extensive work on the topic. (1) For a true fact, we will incorporate\
+    \ it into the KB. Here we need to make sure that it is not already in the KB, which involves relation resolution and entity\
+    \ linking. After a fact is added to the KB, we may predict that some related facts involving some existing relations in\
+    \ the KB may also be true (not logical implications as they can be automatically inferred). For example, if the user says\
+    \ “Obama was born in USA,” the system may guess that (Obama, CitizenOf, USA) (meaning that Obama is a citizen of USA)\
+    \ could also be true based on the current KB. To verify this fact, it needs to solve a KBC problem by treating (Obama,\
+    \ CitizenOf, USA) as a query. This is a KBC problem because the fact (Obama, BornIn, USA) extracted from the original\
+    \ sentence has been added to the KB. Then Obama and USA are in the KB. If the KBC problem is solved, it learns a new fact\
+    \ (Obama, CitizenOf, USA) in addition to the extracted fact (Obama, BornIn, USA). (2) For a query fact, e.g., (Obama,\
+    \ BornIn, USA) extracted from the user question “Was Obama born in USA?” we need to solve the OKBC problem if any of “Obama,\
+    \ “BornIn”, or “USA\" is not already in the KB.\nWe can see that OKBC is the core of a knowledge learning engine for conversation.\
+    \ Thus, in this paper, we focus on solving it. We assume that other tasks such as fact/relation extraction and resolution\
+    \ and guessing of related facts of an extracted fact are solved by other sub-systems.\nWe solve the OKBC problem by mimicking\
+    \ how humans acquire knowledge and perform reasoning in an interactive conversation. Whenever we encounter an unknown\
+    \ concept or relation while answering a query, we perform inference using our existing knowledge. If our knowledge does\
+    \ not allow us to draw a conclusion, we typically ask questions to others to acquire related knowledge and use it in inference.\
+    \ The process typically involves an inference strategy (a sequence of actions), which interleaves a sequence of processing\
+    \ and interactive actions. A processing action can be the selection of related facts, deriving inference chain, etc.,\
+    \ that advances the inference process. An interactive action can be deciding what to ask, formulating a suitable question,\
+    \ etc., that enable us to interact. The process helps grow the knowledge over time and the gained knowledge enables us\
+    \ to communicate better in the future. We call this lifelong interactive learning and inference (LiLi). Lifelong learning\
+    \ is reflected by the facts that the newly acquired facts are retained in the KB and used in inference for future queries,\
+    \ and that the accumulated knowledge in addition to the updated KB including past inference performances are leveraged\
+    \ to guide future interaction and learning. LiLi should have the following capabilities:\nThis setting is ideal for many\
+    \ NLP applications like dialog and question-answering systems that naturally provide the scope for human interaction and\
+    \ demand real-time inference.\nLiLi starts with the closed-world KBC approach path-ranking (PR) BIBREF11 , BIBREF17 and\
+    \ extends KBC in a major way to open-world knowledge base completion (OKBC). For a relation INLINEFORM0 , PR works by\
+    \ enumerating paths (except single-link path INLINEFORM1 ) between entity-pairs linked by INLINEFORM2 in the KB and use\
+    \ them as features to train a binary classifier to predict whether a query INLINEFORM3 should be in the KB. Here, a path\
+    \ between two entities is a sequence of relations linking them. In our work, we adopt the latest PR method, C-PR BIBREF16\
+    \ and extend it to make it work in the open-world setting. C-PR enumerates paths by performing bidirectional random walks\
+    \ over the KB graph while leveraging the context of the source-target entity-pair. We also adopt and extend the compositional\
+    \ vector space model BIBREF20 , BIBREF21 with continual learning capability for prediction.\nGiven an OKBC query ( INLINEFORM0\
+    \ , INLINEFORM1 , INLINEFORM2 ) (e.g., “(Obama, CitizenOf, USA), which means whether Obama a citizen of USA), LiLi interacts\
+    \ with the user (if needed) by dynamically formulating questions (see the interaction example in Figure 1, which will\
+    \ be further explained in §3) and leverages the interactively acquired knowledge (supporting facts (SFs) in the figure)\
+    \ for continued inference. To do so, LiLi formulates a query-specific inference strategy and executes it. We design LiLi\
+    \ in a Reinforcement Learning (RL) setting that performs sub-tasks like formulating and executing strategy, training a\
+    \ prediction model for inference, and knowledge retention for future use. To the best of our knowledge, our work is the\
+    \ first to address the OKBC problem and to propose an interactive learning mechanism to solve it in a continuous or lifelong\
+    \ manner. We empirically verify the effectiveness of LiLi on two standard real-world KBs: Freebase and WordNet. Experimental\
+    \ results show that LiLi is highly effective in terms of its predictive performance and strategy formulation ability.\n\
+    Related Work\nTo the best of our knowledge, we are not aware of any knowledge learning system that can learn new knowledge\
+    \ in the conversation process. This section thus discusses other related work.\nAmong existing KB completion approaches,\
+    \ BIBREF20 extended the vector space model for zero-shot KB inference. However, the model cannot handle unknown entities\
+    \ and can only work on fixed set of unknown relations with known embeddings. Recently, BIBREF22 proposed a method using\
+    \ external text corpus to perform inference on unknown entities. However, the method cannot handle unknown relations.\
+    \ Thus, these methods are not suitable for our open-world setting. None of the existing KB inference methods perform interactive\
+    \ knowledge learning like LiLi. NELL BIBREF23 continuously updates its KB using facts extracted from the Web. Our task\
+    \ is very different as we do not do Web fact extraction (which is also useful). We focus on user interactions in this\
+    \ paper. Our work is related to interactive language learning (ILL) BIBREF24 , BIBREF25 , but these are not about KB completion.\
+    \ The work in BIBREF26 allows a learner to ask questions in dialogue. However, this work used RL to learn about whether\
+    \ to ask the user or not. The “what to ask aspect\" was manually designed by modeling synthetic tasks. LiLi formulates\
+    \ query-specific inference strategies which embed interaction behaviors. Also, no existing dialogue systems BIBREF4 ,\
+    \ BIBREF27 , BIBREF28 , BIBREF29 , BIBREF30 employ lifelong learning to train prediction models by using information/knowledge\
+    \ retained in the past.\nOur work is related to general lifelong learning in BIBREF31 , BIBREF32 , BIBREF33 , BIBREF34\
+    \ , BIBREF35 , BIBREF36 . However, they learn only one type of tasks, e.g., supervised, topic modeling or reinforcement\
+    \ learning (RL) tasks. None of them is suitable for our setting, which involves interleaving of RL, supervised and interactive\
+    \ learning. More details about lifelong learning can be found in the book BIBREF31 .\nInteractive Knowledge Learning (LiLi)\n\
+    We design LiLi as a combination of two interconnected models: (1) a RL model that learns to formulate a query-specific\
+    \ inference strategy for performing the OKBC task, and (2) a lifelong prediction model to predict whether a triple should\
+    \ be in the KB, which is invoked by an action while executing the inference strategy and is learned for each relation\
+    \ as in C-PR. The framework improves its performance over time through user interaction and knowledge retention. Compared\
+    \ to the existing KB inference methods, LiLi overcomes the following three challenges for OKBC:\n1. Mapping open-world\
+    \ to close-world. Being a closed-world method, C-PR cannot extract path features and learn a prediction model when any\
+    \ of INLINEFORM0 , INLINEFORM1 or INLINEFORM2 is unknown. LiLi solves this problem through interactive knowledge acquisition.\
+    \ If INLINEFORM3 is unknown, LiLi asks the user to provide a clue (an example of INLINEFORM4 ). And if INLINEFORM5 or\
+    \ INLINEFORM6 is unknown, LiLi asks the user to provide a link (relation) to connect the unknown entity with an existing\
+    \ entity (automatically selected) in the KB. We refer to such a query as a connecting link query (CLQ). The acquired knowledge\
+    \ reduces OKBC to KBC and makes the inference task feasible.\n2. Spareseness of KB. A main issue of all PR methods like\
+    \ C-PR is the connectivity of the KB graph. If there is no path connecting INLINEFORM0 and INLINEFORM1 in the graph, path\
+    \ enumeration of C-PR gets stuck and inference becomes infeasible. In such cases, LiLi uses a template relation (“@-?-@\"\
+    ) as the missing link marker to connect entity-pairs and continues feature extraction. A path containing “@-?-@\" is called\
+    \ an incomplete path. Thus, the extracted feature set contains both complete (no missing link) and incomplete paths. Next,\
+    \ LiLi selects an incomplete path from the feature set and asks the user to provide a link for path completion. We refer\
+    \ to such a query as missing link query (MLQ).\n3. Limitation in user knowledge. If the user is unable to respond to MLQs\
+    \ or CLQs, LiLi uses a guessing mechanism (discussed later) to fill the gap. This enables LiLi to continue its inference\
+    \ even if the user cannot answer a system question.\nComponents of LiLi\nAs lifelong learning needs to retain knowledge\
+    \ learned from past tasks and use it to help future learning BIBREF31 , LiLi uses a Knowledge Store (KS) for knowledge\
+    \ retention. KS has four components: (i) Knowledge Graph ( INLINEFORM0 ): INLINEFORM1 (the KB) is initialized with base\
+    \ KB triples (see §4) and gets updated over time with the acquired knowledge. (ii) Relation-Entity Matrix ( INLINEFORM2\
+    \ ): INLINEFORM3 is a sparse matrix, with rows as relations and columns as entity-pairs and is used by the prediction\
+    \ model. Given a triple ( INLINEFORM4 , INLINEFORM5 , INLINEFORM6 ) INLINEFORM7 , we set INLINEFORM8 [ INLINEFORM9 , (\
+    \ INLINEFORM10 , INLINEFORM11 )] = 1 indicating INLINEFORM12 occurs for pair ( INLINEFORM13 , INLINEFORM14 ). (iii) Task\
+    \ Experience Store ( INLINEFORM15 ): INLINEFORM16 stores the predictive performance of LiLi on past learned tasks in terms\
+    \ of Matthews correlation coefficient (MCC) that measures the quality of binary classification. So, for two tasks INLINEFORM17\
+    \ and INLINEFORM18 (each relation is a task), if INLINEFORM19 [ INLINEFORM20 ] INLINEFORM21 INLINEFORM22 [ INLINEFORM23\
+    \ ] [where INLINEFORM24 [ INLINEFORM25 ]=MCC( INLINEFORM26 )], we say C-PR has learned INLINEFORM27 well compared to INLINEFORM28\
+    \ . (iv) Incomplete Feature DB ( INLINEFORM29 ): INLINEFORM30 stores the frequency of an incomplete path INLINEFORM31\
+    \ in the form of a tuple ( INLINEFORM32 , INLINEFORM33 , INLINEFORM34 ) and is used in formulating MLQs. INLINEFORM35\
+    \ [( INLINEFORM36 , INLINEFORM37 , INLINEFORM38 )] = INLINEFORM39 implies LiLi has extracted incomplete path INLINEFORM40\
+    \ INLINEFORM41 times involving entity-pair INLINEFORM42 [( INLINEFORM43 , INLINEFORM44 )] for query relation INLINEFORM45\
+    \ .\nThe RL model learns even after training whenever it encounters an unseen state (in testing) and thus, gets updated\
+    \ over time. KS is updated continuously over time as a result of the execution of LiLi and takes part in future learning.\
+    \ The prediction model uses lifelong learning (LL), where we transfer knowledge (parameter values) from the model for\
+    \ a past most similar task to help learn for the current task. Similar tasks are identified by factorizing INLINEFORM0\
+    \ and computing a task similarity matrix INLINEFORM1 . Besides LL, LiLi uses INLINEFORM2 to identify poorly learned past\
+    \ tasks and acquire more clues for them to improve its skillset over time.\nLiLi also uses a stack, called Inference Stack\
+    \ ( INLINEFORM0 ) to hold query and its state information for RL. LiLi always processes stack top ( INLINEFORM1 [top]).\
+    \ The clues from the user get stored in INLINEFORM2 on top of the query during strategy execution and processed first.\
+    \ Thus, the prediction model for INLINEFORM3 is learned before performing inference on query, transforming OKBC to a KBC\
+    \ problem. Table 1 shows the parameters of LiLi used in the following sections.\nWorking of LiLi\nGiven an OKBC query\
+    \ ( INLINEFORM0 , INLINEFORM1 , INLINEFORM2 ), we represent it as a data instance INLINEFORM3 . INLINEFORM4 consists of\
+    \ INLINEFORM5 (the query triple), INLINEFORM6 (interaction limit set for INLINEFORM7 ), INLINEFORM8 (experience list storing\
+    \ the transition history of MDP for INLINEFORM9 in RL) and INLINEFORM10 (mode of INLINEFORM11 ) denoting if INLINEFORM12\
+    \ is ` INLINEFORM13 ' (training), ` INLINEFORM14 ' (validation), ` INLINEFORM15 ' (evaluation) or ` INLINEFORM16 ' (clue)\
+    \ instance and INLINEFORM17 (feature set). We denote INLINEFORM18 ( INLINEFORM19 ) as the set of all complete (incomplete)\
+    \ path features in INLINEFORM20 . Given a data instance INLINEFORM21 , LiLi starts its initialization as follows: it sets\
+    \ the state as INLINEFORM22 (based on INLINEFORM23 , explained later), pushes the query tuple ( INLINEFORM24 , INLINEFORM25\
+    \ ) into INLINEFORM26 and feeds INLINEFORM27 [top] to the RL-model for strategy formulation from INLINEFORM28 .\nInference\
+    \ Strategy Formulation. We view solving the strategy formulation problem as learning to play an inference game, where\
+    \ the goal is to formulate a strategy that \"makes the inference task possible\". Considering PR methods, inference is\
+    \ possible, iff (1) INLINEFORM0 becomes known to its KB (by acquiring clues when INLINEFORM1 is unknown) and (2) path\
+    \ features are extracted between INLINEFORM2 and INLINEFORM3 (which inturn requires INLINEFORM4 and INLINEFORM5 to be\
+    \ known to KB). If these conditions are met at the end of an episode (when strategy formulation finishes for a given query)\
+    \ of the game, LiLi wins and thus, it trains the prediction model for INLINEFORM6 and uses it for inference.\nLiLi's strategy\
+    \ formulation is modeled as a Markov Decision Process (MDP) with finite state ( INLINEFORM0 ) and action ( INLINEFORM1\
+    \ ) spaces. A state INLINEFORM2 consists of 10 binary state variables (Table 2), each of which keeps track of results\
+    \ of an action INLINEFORM3 taken by LiLi and thus, records the progress in inference process made so far. INLINEFORM4\
+    \ is the initial state with all state bits set as 0. If the data instance (query) is a clue [ INLINEFORM5 ], INLINEFORM6\
+    \ [CLUE] is set as 1. INLINEFORM7 consists of 6 actions (Table 3). INLINEFORM8 , INLINEFORM9 , INLINEFORM10 are processing\
+    \ actions and INLINEFORM11 , INLINEFORM12 , INLINEFORM13 are interactive actions. Whenever INLINEFORM14 is executed, the\
+    \ MDP reaches the terminal state. Given an action INLINEFORM15 in state INLINEFORM16 , if INLINEFORM17 is invalid in INLINEFORM21\
+    \ or the objective of INLINEFORM22 is unsatisfied (* marked the condition in INLINEFORM23 ), RL receives a negative reward\
+    \ (empirically set); else receives a positive reward.. We use Q-learning BIBREF38 with INLINEFORM24 -greedy strategy to\
+    \ learn the optimal policy for training the RL model. Note that, the inference strategy is independent of KB type and\
+    \ correctness of prediction. Thus, the RL-model is trained only once from scratch (reused thereafter for other KBs) and\
+    \ also, independently of the prediction model.\nSometimes the training dataset may not be enough to learn optimal policy\
+    \ for all INLINEFORM0 . Thus, encountering an unseen state during test can make RL-model clueless about the action. Given\
+    \ a state INLINEFORM1 , whenever an invalid INLINEFORM2 is chosen, LiLi remains in INLINEFORM3 . For INLINEFORM4 , LiLi\
+    \ remains in INLINEFORM5 untill INLINEFORM6 (see Table 1 for INLINEFORM7 ). So, if the state remains the same for ( INLINEFORM8\
+    \ +1) times, it implies LiLi has encountered a fault (an unseen state). RL-model instantly switches to the training mode\
+    \ and randomly explores INLINEFORM9 to learn the optimal action (fault-tolerant learning). While exploring INLINEFORM10\
+    \ , the model chooses INLINEFORM11 only when it has tried all other INLINEFORM12 to avoid abrupt end of episode.\nExecution\
+    \ of Actions. At any given point in time, let ( INLINEFORM0 , INLINEFORM1 ) be the current INLINEFORM2 [top], INLINEFORM3\
+    \ is the chosen action and the current version of KS components are INLINEFORM4 , INLINEFORM5 , INLINEFORM6 and INLINEFORM7\
+    \ . Then, if INLINEFORM8 is invalid in INLINEFORM9 , LiLi only updates INLINEFORM10 [top] with ( INLINEFORM11 , INLINEFORM12\
+    \ ) and returns INLINEFORM13 [top] to RL-model. In this process, LiLi adds experience ( INLINEFORM14 , INLINEFORM15 ,\
+    \ INLINEFORM16 , INLINEFORM17 ) in INLINEFORM18 and then, replaces INLINEFORM19 [top] with ( INLINEFORM20 , INLINEFORM21\
+    \ ). If INLINEFORM22 is valid in INLINEFORM23 , LiLi first sets the next state INLINEFORM24 and performs a sequence of\
+    \ operations INLINEFORM25 based on INLINEFORM26 (discussed below). Unless specified, in INLINEFORM27 , LiLi always monitors\
+    \ INLINEFORM28 and if INLINEFORM29 becomes 0, LiLi sets INLINEFORM30 . Also, whenever LiLi asks the user a query, INLINEFORM31\
+    \ is decremented by 1. Once INLINEFORM32 ends, LiLi updates INLINEFORM33 [top] with ( INLINEFORM34 , INLINEFORM35 ) and\
+    \ returns INLINEFORM36 [top] to RL-model for choosing the next action.\nIn INLINEFORM0 , LiLi searches INLINEFORM1 , INLINEFORM2\
+    \ , INLINEFORM3 in INLINEFORM4 and sets appropriate bits in INLINEFORM5 (see Table 2). If INLINEFORM6 was unknown before\
+    \ and is just added to INLINEFORM7 or is in the bottom INLINEFORM8 % (see Table 1 for INLINEFORM9 ) of INLINEFORM10 ,\
+    \ LiLi randomly sets INLINEFORM14 with probability INLINEFORM15 . If INLINEFORM16 is a clue and INLINEFORM17 , LiLi updates\
+    \ KS with triple INLINEFORM18 , where ( INLINEFORM19 , INLINEFORM20 , INLINEFORM21 ) and ( INLINEFORM22 , INLINEFORM23\
+    \ , INLINEFORM24 ) gets added to INLINEFORM25 and INLINEFORM26 , INLINEFORM27 are set as 1.\nIn INLINEFORM0 , LiLi asks\
+    \ the user to provide a clue (+ve instance) for INLINEFORM1 and corrupts INLINEFORM2 and INLINEFORM3 of the clue once\
+    \ at a time, to generate -ve instances by sampling nodes from INLINEFORM4 . These instances help in training prediction\
+    \ model for INLINEFORM5 while executing INLINEFORM6 .\nIn INLINEFORM0 , LiLi selects an incomplete path INLINEFORM1 from\
+    \ INLINEFORM2 to formulate MLQ, such that INLINEFORM3 is most frequently observed for INLINEFORM4 and INLINEFORM5 is high,\
+    \ given by INLINEFORM6 . Here, INLINEFORM7 denotes the contextual similarity BIBREF16 of entity-pair INLINEFORM8 . If\
+    \ INLINEFORM9 is high, INLINEFORM10 is more likely to possess a relation between them and so, is a good candidate for\
+    \ formulating MLQ. When the user does not respond to MLQ (or CLQ in INLINEFORM11 ), the guessing mechanism is used, which\
+    \ works as follows: Since contextual similarity of entity-pairs is highly correlated with their class labels BIBREF16\
+    \ , LiLi divides the similarity range [-1, 1] into three segments, using a low ( INLINEFORM12 ) and high ( INLINEFORM13\
+    \ ) similarity threshold and replaces the missing link with INLINEFORM14 in INLINEFORM15 to make it complete as follows:\
+    \ If INLINEFORM16 , INLINEFORM17 = “@-LooselyRelatedTo-@\"; else if INLINEFORM18 , INLINEFORM19 =“@-NotRelatedTo-@\";\
+    \ Otherwise, INLINEFORM20 =“@-RelatedTo-@\".\nIn INLINEFORM0 , LiLi asks CLQs for connecting unknown entities INLINEFORM1\
+    \ and/or INLINEFORM2 with INLINEFORM3 by selecting the most contextually relevant node (wrt INLINEFORM4 , INLINEFORM5\
+    \ ) from INLINEFORM6 , given by link INLINEFORM7 . We adopt the contextual relevance idea in BIBREF16 which is computed\
+    \ using word embedding BIBREF39\nIn INLINEFORM0 , LiLi extracts path features INLINEFORM1 between ( INLINEFORM2 , INLINEFORM3\
+    \ ) and updates INLINEFORM4 with incomplete features from INLINEFORM5 . LiLi always trains the prediction model with complete\
+    \ features INLINEFORM6 and once INLINEFORM7 or INLINEFORM8 , LiLi stops asking MLQs. Thus, in both INLINEFORM9 and INLINEFORM10\
+    \ , LiLi always monitors INLINEFORM11 to check for the said requirements and sets INLINEFORM12 to control interactions.\n\
+    In INLINEFORM0 , if LiLi wins the episode, it adds INLINEFORM1 in one of data buffers INLINEFORM2 based on its mode INLINEFORM3\
+    \ . E.g., if INLINEFORM4 or INLINEFORM5 , INLINEFORM6 is used for training and added to INLINEFORM7 . Similarly validation\
+    \ buffer INLINEFORM8 and evaluation buffer INLINEFORM9 are populated. If INLINEFORM10 , LiLi invokes the prediction model\
+    \ for INLINEFORM11 .\nLifelong Relation Prediction. Given a relation INLINEFORM0 , LiLi uses INLINEFORM1 and INLINEFORM2\
+    \ (see INLINEFORM3 ) to train a prediction model (say, INLINEFORM4 ) with parameters INLINEFORM5 . For a unknown INLINEFORM6\
+    \ , the clue instances get stored in INLINEFORM7 and INLINEFORM8 . Thus, LiLi populates INLINEFORM9 by taking 10% (see\
+    \ §4) of the instances from INLINEFORM10 and starts the training. For INLINEFORM11 , LiLi uses a LSTM BIBREF40 to compose\
+    \ the vector representation of each feature INLINEFORM12 as INLINEFORM13 and vector representation of INLINEFORM14 as\
+    \ INLINEFORM15 . Next, LiLi computes the prediction value, INLINEFORM16 as sigmoid of the mean cosine similarity of all\
+    \ features and INLINEFORM17 , given by INLINEFORM18 ) and maximize the log-likelihood of INLINEFORM19 for training. Once\
+    \ INLINEFORM20 is trained, LiLi updates INLINEFORM21 [ INLINEFORM22 ] using INLINEFORM23 . We also train an inverse model\
+    \ for INLINEFORM24 , INLINEFORM25 by reversing the path features in INLINEFORM26 and INLINEFORM27 which help in lifelong\
+    \ learning (discussed below). Unlike BIBREF20 , BIBREF21 , while predicting the label for INLINEFORM28 , we compute a\
+    \ relation-specific prediction threshold INLINEFORM29 corresponding to INLINEFORM30 using INLINEFORM31 as: INLINEFORM32\
+    \ and infer INLINEFORM33 as +ve if INLINEFORM34 and -ve otherwise. Here, INLINEFORM35 ( INLINEFORM36 ) is the mean prediction\
+    \ value for all +ve (-ve) examples in INLINEFORM37 .\nModels trained on a few examples (e.g., clues acquired for unknown\
+    \ INLINEFORM0 ) with randomly initialized weights often perform poorly due to underfitting. Thus, we transfer knowledge\
+    \ (weights) from the past most similar (wrt INLINEFORM1 ) task in a lifelong learning manner BIBREF31 . LiLi uses INLINEFORM2\
+    \ to find the past most similar task for INLINEFORM3 as follows: LiLi computes trancated SVD of INLINEFORM4 as INLINEFORM5\
+    \ and then, the similarity matrix INLINEFORM6 . INLINEFORM7 provides the similarity between relations INLINEFORM8 and\
+    \ INLINEFORM9 in INLINEFORM10 . Thus, LiLi chooses a source relation INLINEFORM11 to transfer weights. Here, INLINEFORM12\
+    \ is the set of all INLINEFORM13 and INLINEFORM14 for which LiLi has already learned a prediction model. Now, if INLINEFORM15\
+    \ or INLINEFORM16 , LiLi randomly initializes the weights INLINEFORM17 for INLINEFORM18 and proceeds with the training.\
+    \ Otherwise, LiLi uses INLINEFORM19 as initial weights and fine-tunes INLINEFORM20 with a low learning rate.\nA Running\
+    \ Example. Considering the example shown in Figure 1, LiLi works as follows: first, LiLi executes INLINEFORM0 and detects\
+    \ that the source entity “Obama\" and query relation “CitizenOf\" are unknown. Thus, LiLi executes INLINEFORM1 to acquire\
+    \ clue (SF1) for “CitizenOf\" and pushes the clue (+ve example) and two generated -ve examples into INLINEFORM2 . Once\
+    \ the clues are processed and a prediction model is trained for “CitizenOf\" by formulating separate strategies for them,\
+    \ LiLi becomes aware of “CitizenOf\". Now, as the clues have already been popped from INLINEFORM3 , the query becomes\
+    \ INLINEFORM4 and the strategy formulation process for the query resumes. Next, LiLi asks user to provide a connecting\
+    \ link for “Obama\" by performing INLINEFORM5 . Now, the query entities and relation being known, LiLi enumerates paths\
+    \ between “Obama\" and “USA\" by performing INLINEFORM6 . Let an extracted path be “ INLINEFORM7 \" with missing link\
+    \ between ( INLINEFORM8 , INLINEFORM9 ). LiLi asks the user to fill the link by performing INLINEFORM10 and then, extracts\
+    \ the complete feature “ INLINEFORM11 \". The feature set is then fed to the prediction model and inference is made as\
+    \ a result of INLINEFORM12 . Thus, the formulated inference strategy is: “ INLINEFORM13 \".\nExperiments\nWe now evaluate\
+    \ LiLi in terms of its predictive performance and strategy formulation abilities.\nData: We use two standard datasets\
+    \ (see Table 4): (1) Freebase FB15k, and (2) WordNet INLINEFORM0 . Using each dataset, we build a fairly large graph and\
+    \ use it as the original KB ( INLINEFORM1 ) for evaluation. We also augment INLINEFORM2 with inverse triples ( INLINEFORM3\
+    \ , INLINEFORM4 , INLINEFORM5 ) for each ( INLINEFORM6 , INLINEFORM7 , INLINEFORM8 ) following existing KBC methods.\n\
+    Parameter Settings. Unless specified, the empirically set parameters (see Table 1) of LiLi are: INLINEFORM0 , INLINEFORM1\
+    \ , INLINEFORM2 , INLINEFORM3 , INLINEFORM4 , INLINEFORM5 , INLINEFORM6 , INLINEFORM7 , INLINEFORM8 , INLINEFORM9 , INLINEFORM10\
+    \ . For training RL-model with INLINEFORM11 -greedy strategy, we use INLINEFORM12 , INLINEFORM13 , pre-training steps=50000.\
+    \ We used Keras deep learning library to implement and train the prediction model. We set batch-size as 128, max. training\
+    \ epoch as 150, dropout as 0.2, hidden units and embedding size as 300 and learning rate as 5e-3 which is reduced gradually\
+    \ on plateau with factor 0.5 and patience 5. Adam optimizer and early stopping were used in training. We also shuffle\
+    \ INLINEFORM14 in each epoch and adjust class weights inversely proportional to class frequencies in INLINEFORM15 .\n\
+    Labeled Dataset Generation and Simulated User Creation. We create a simulated user for each KB to evaluate LiLi. We create\
+    \ the labeled datasets, the simulated user’s knowledge base ( INLINEFORM0 ), and the base KB ( INLINEFORM1 ) from INLINEFORM2\
+    \ . INLINEFORM3 used as the initial KB graph ( INLINEFORM4 ) of LiLi.\nWe followed BIBREF16 for labeled dataset generation.\
+    \ For Freebase, we found 86 relations with INLINEFORM0 triples and randomly selected 50 from various domains. We randomly\
+    \ shuffle the list of 50 relations, select 25% of them as unknown relations and consider the rest (75%) as known relations.\
+    \ For each known relation INLINEFORM1 , we randomly shuffle the list of distinct triples for INLINEFORM2 , choose 1000\
+    \ triples and split them into 60% training, 10% validation and 20% test. Rest 10% along with the leftover (not included\
+    \ in the list of 1000) triples are added to INLINEFORM3 . For each unknown relation INLINEFORM4 , we remove all triples\
+    \ of INLINEFORM5 from INLINEFORM6 and add them to INLINEFORM7 . In this process, we also randomly choose 20% triples as\
+    \ test instances for unknown INLINEFORM8 which are excluded from INLINEFORM9 . Note that, now INLINEFORM10 has at least\
+    \ 10% of chosen triples for each INLINEFORM11 (known and unknown) and so, user is always able to provide clues for both\
+    \ cases. For each labeled dataset, we randomly choose 10% of the entities present in dataset triples, remove triples involving\
+    \ those entities from INLINEFORM12 and add to INLINEFORM13 . At this point, INLINEFORM14 gets reduced to INLINEFORM15\
+    \ and is used as INLINEFORM16 for LiLi. The dataset stats in Table 4 shows that the base KB (60% triples of INLINEFORM17\
+    \ ) is highly sparse (compared to original KB) which makes the inference task much harder. WordNet dataset being small,\
+    \ we select all 18 relations for evaluation and create labeled dataset, INLINEFORM18 and INLINEFORM19 following Freebase.\
+    \ Although the user may provide clues 100% of the time, it often cannot respond to MLQs and CLQs (due to lack of required\
+    \ triples/facts). Thus, we further enrich INLINEFORM20 with external KB triples.\nGiven a relation INLINEFORM0 and an\
+    \ observed triple ( INLINEFORM1 , INLINEFORM2 , INLINEFORM3 ) in training or testing, the pair ( INLINEFORM4 , INLINEFORM5\
+    \ ) is regarded as a +ve instance for INLINEFORM6 . Following BIBREF18 , for each +ve instance ( INLINEFORM7 , INLINEFORM8\
+    \ ), we generate two negative ones, one by randomly corrupting the source INLINEFORM9 , and the other by corrupting the\
+    \ target INLINEFORM10 . Note that, the test triples are not in INLINEFORM11 or INLINEFORM12 and none of the -ve instances\
+    \ overlap with the +ve ones.\nBaselines. As none of the existing KBC methods can solve the OKBC problem, we choose various\
+    \ versions of LiLi as baselines.\nSingle: Version of LiLi where we train a single prediction model INLINEFORM0 for all\
+    \ test relations.\nSep: We do not transfer (past learned) weights for initializing INLINEFORM0 , i.e., we disable LL.\n\
+    F-th): Here, we use a fixed prediction threshold 0.5 instead of relation-specific threshold INLINEFORM0 .\nBG: The missing\
+    \ or connecting links (when the user does not respond) are filled with “@-RelatedTo-@\" blindly, no guessing mechanism.\n\
+    w/o PTS: LiLi does not ask for additional clues via past task selection for skillset improvement.\nEvaluation Metrics.\
+    \ To evaluate the strategy formulation ability, we introduce a measure called Coverage( INLINEFORM0 ), defined as the\
+    \ fraction of total query data instances, for which LiLi has successfully formulated strategies that lead to winning.\
+    \ If LiLi wins on all episodes for a given dataset, INLINEFORM1 is 1.0. To evaluate the predictive performance, we use\
+    \ Avg. MCC and avg. +ve F1 score.\nResults and Analysis\nEvaluation-I: Strategy Formulation Ability. Table 5 shows the\
+    \ list of inference strategies formulated by LiLi for various INLINEFORM0 and INLINEFORM1 , which control the strategy\
+    \ formulation of LiLi. When INLINEFORM2 , LiLi cannot interact with user and works like a closed-world method. Thus, INLINEFORM3\
+    \ drops significantly (0.47). When INLINEFORM4 , i.e. with only one interaction per query, LiLi acquires knowledge well\
+    \ for instances where either of the entities or relation is unknown. However, as one unknown entity may appear in multiple\
+    \ test triples, once the entity becomes known, LiLi doesn’t need to ask for it again and can perform inference on future\
+    \ triples causing significant increase in INLINEFORM5 (0.97). When INLINEFORM6 , LiLi is able to perform inference on\
+    \ all instances and INLINEFORM7 becomes 1. For INLINEFORM8 , LiLi uses INLINEFORM9 only once (as only one MLQ satisfies\
+    \ INLINEFORM10 ) compared to INLINEFORM11 . In summary, LiLi’s RL-model can effectively formulate query-specific inference\
+    \ strategies (based on specified parameter values). Evaluation-II: Predictive Performance. Table 6 shows the comparative\
+    \ performance of LiLi with baselines. To judge the overall improvements, we performed paired t-test considering +ve F1\
+    \ scores on each relation as paired data. Considering both KBs and all relation types, LiLi outperforms Sep with INLINEFORM12\
+    \ . If we set INLINEFORM13 (training with very few clues), LiLi outperforms Sep with INLINEFORM14 on Freebase considering\
+    \ MCC. Thus, the lifelong learning mechanism is effective in transferring helpful knowledge. Single model performs better\
+    \ than Sep for unknown relations due to the sharing of knowledge (weights) across tasks. However, for known relations,\
+    \ performance drops because, as a new relation arrives to the system, old weights get corrupted and catastrophic forgetting\
+    \ occurs. For unknown relations, as the relations are evaluated just after training, there is no chance for catastrophic\
+    \ forgetting. The performance improvement ( INLINEFORM15 ) of LiLi over F-th on Freebase signifies that the relation-specific\
+    \ threshold INLINEFORM16 works better than fixed threshold 0.5 because, if all prediction values for test instances lie\
+    \ above (or below) 0.5, F-th predicts all instances as +ve (-ve) which degrades its performance. Due to the utilization\
+    \ of contextual similarity (highly correlated with class labels) of entity-pairs, LiLi’s guessing mechanism works better\
+    \ ( INLINEFORM17 ) than blind guessing (BG). The past task selection mechanism of LiLi also improves its performance over\
+    \ w/o PTS, as it acquires more clues during testing for poorly performed tasks (evaluated on validation set). For Freebase,\
+    \ due to a large number of past tasks [9 (25% of 38)], the performance difference is more significant ( INLINEFORM18 ).\
+    \ For WordNet, the number is relatively small [3 (25% of 14)] and hence, the difference is not significant.\nEvaluation-III:\
+    \ User Interaction vs. Performance. Table 7 shows the results of LiLi by varying clue acquisition rate ( INLINEFORM0 ).\
+    \ We use Freebase for tuning INLINEFORM1 due to its higher number of unknown test relations compared to WordNet. LiLi’s\
+    \ performance improves significantly as it acquires more clues from the user. The results on INLINEFORM2 outperforms (\
+    \ INLINEFORM3 ) that on INLINEFORM4 . Table 8 shows the results of LiLi on user responses to MLQ’s and CLQ’s. Answering\
+    \ MLQ’s and CLQ’s is very hard for simulated users (unlike crowd-sourcing) as often INLINEFORM5 lacks the required triple.\
+    \ Thus, we attempt to analyze how the performance is effected if the user does not respond at all. The results show a\
+    \ clear trend in overall performance improvement when the user responds. However, the improvement is not significant as\
+    \ the simulated user’s query satisfaction rate (1% MLQs and 10% CLQs) is very small. But, the analysis shows the effectiveness\
+    \ of LiLi’s guessing mechanism and continual learning ability that help in achieving avg. +ve F1 of 0.57 and 0.62 on FB\
+    \ and WN respectively with minimal participation of the user.\nConclusion\nIn this paper, we are interested in building\
+    \ a generic engine for continuous knowledge learning in human-machine conversations. We first showed that the problem\
+    \ underlying the engine can be formulated as an open-world knowledge base completion (OKBC) problem. We then proposed\
+    \ an lifelong interactive learning and inference (LiLi) approach to solving the OKBC problem. OKBC is a generalization\
+    \ of KBC. LiLi solves the OKBC problem by first formulating a query-specific inference strategy using RL and then executing\
+    \ it to solve the problem by interacting with the user in a lifelong learning manner. Experimental results showed the\
+    \ effectiveness of LiLi in terms of both predictive quality and strategy formulation ability. We believe that a system\
+    \ with the LiLi approach can serve as a knowledge learning engine for conversations. Our future work will improve LiLi\
+    \ to make more accurate.\nAcknowledgments\nThis work was supported in part by National Science Foundation (NSF) under\
+    \ grant no. IIS-1407927 and IIS-1650900, and a gift from Huawei Technologies Co Ltd.\n\n Answer the question based on\
+    \ the above article as concisely as you can, using a single phrase or sentence if possible. If the question cannot be\
+    \ answered based on the information in the article, write \"unanswerable\". If the question is a yes/no question, answer\
+    \ \"yes\", \"no\", or \"unanswerable\". Do not provide any explanation.\n\nQuestion: What metrics are used to establish\
+    \ that this makes chatbots more knowledgeable and better at learning and conversation? \n\nAnswer:"
+- prompt_id: longbench_govreport_8k_plus
+  task_type: document_summarization
+  source: LongBench-E
+  source_version: 5e628be450b7e67fb7ae6e201bd6d8f7056f7672
+  source_item_id: 271a9c0cfb468525ee2b1d0dd2465702ff45d5d26aa4ae7b
+  input_length_class: 8k_plus
+  expected_output_class: long
+  source_metadata:
+    dataset: gov_report_e
+    row_index: 227
+    benchmark_length: 9038
+    context_characters: 56730
+    language: en
+  text_sha256: a91b80878e7e67771dafdbb93200d2c0854e1aef5483c3ecaffb47fd94f1f417
+  text: |-
+    You are given a report by a government agency. Write a one-page summary of the report.
+
+    Report:
+    Concerned that the federal government was more focused on program activities and processes than the results to be achieved, Congress passed the Government Performance and Results Act of 1993 (GPRA). GPRA sought to focus federal agencies on performance by requiring agencies to develop long-term and annual goals, and measure and report on progress towards those goals annually. Based on our analyses of the act’s implementation, we concluded in March 2004 that GPRA’s requirements had laid a solid foundation for results-oriented management. At that time, we found that performance planning and measurement had slowly yet increasingly become a part of agencies’ cultures. For example, managers reported having significantly more performance measures in 2003 than in 1997, when GPRA took effect government-wide. However, the benefit of collecting performance information is fully realized only when that information is actually used by managers to make decisions aimed at improving results. Although our 2003 survey found greater reported availability of performance information than in 1997, it also showed managers’ use of that information for various management activities generally had remained unchanged. Based on those results, and in response to a request from Congress, in September 2005, we developed a framework intended to help agencies better incorporate performance information into their decision making. As shown in figure 1, we identified five leading practices that can promote the use of performance information for policy and program decisions; and four ways agency managers can use performance information to make program decisions aimed at improving results. Our September 2005 report also highlighted examples of how agencies had used performance information to improve results. For example, we described how the Department of Transportation’s National Highway Traffic Safety Administration used performance information to identify, develop, and share effective strategies that increased national safety belt usage—which can decrease injuries and fatalities from traffic accidents— from 11 percent in 1985 to 80 percent in 2004. Subsequently, the GPRA Modernization Act of 2010 (GPRAMA) was enacted, which significantly expanded and enhanced the statutory framework for federal performance management. The Senate Committee on Homeland Security and Governmental Affairs report accompanying the bill that would become GPRAMA stated that agencies were not consistently using performance information to improve their management and results. The report cited the results of our 2007 survey of federal managers. That survey continued to show little change in managers’ use of performance information. The report further stated that provisions in GPRAMA are intended to address those findings and increase the use of performance information to improve performance and results. For example, GPRAMA requires certain agencies to designate a subset of their respective goals as their highest priorities—known as agency priority goals—and to measure and assess progress toward those goals at least quarterly through data-driven reviews. Our recent work and surveys suggest that data-driven reviews are having their intended effect. For example, in July 2015, we found that agencies reported that their reviews had positive effects on progress toward agency goals and efforts to improve the efficiency of operations, among other things. In addition, for those managers who were familiar with their agencies’ data-driven reviews, our 2013 and 2017 surveys showed that the more managers viewed their programs as being subject to a review, the more likely they were to report their agencies’ reviews were driving results and conducted in line with our leading practices. Recognizing the important role these reviews were playing in improving data-driven decision making, our management agenda for the presidential and congressional transition in 2017 included a key action to expand the use of data-driven reviews beyond agency priority goals to other agency goals. More broadly, our recent surveys of federal managers have continued to show that reported government-wide uses of performance information generally have not changed or in some cases have declined. As we found in September 2017, and as illustrated in figure 2, the 2017 update to our index suggests that government-wide use of performance information did not improve between 2013 and 2017. In addition, it is statistically significantly lower relative to our 2007 survey, when we created the index. Moreover, in looking at the government-wide results on the 11 individual survey questions that comprise the index, we found few statistically significant changes in 2017 when compared to (1) our 2013 survey or (2) the year each question was first introduced. For example, in comparing 2013 and 2017 results, two questions had results that were statistically significantly different: The percentage of managers who reported that employees who report to them pay attention to their agency’s use of performance information was statistically significantly higher (from 40 to 46 percent). The percentage of managers who reported using performance information to adopt new program approaches or change work processes was statistically significantly lower (from 54 to 47 percent). As we stated in our September 2017 report, the decline on the latter question was of particular concern as agencies were developing plans to improve their efficiency, effectiveness, and accountability, as called for by an April 2017 memorandum from OMB. In early 2017, the administration announced several efforts intended to improve government performance. OMB issued several memorandums detailing the administration’s plans to improve government performance by reorganizing the government, reducing the federal workforce, and reducing federal agency burden. As part of the reorganization efforts, OMB and agencies were to develop government-wide and agency reform plans, respectively, designed to leverage various GPRAMA provisions. For instance, the April 2017 memorandum mentioned above stated that OMB intends to monitor implementation of the reforms using, among other things, agency priority goals. While many agency-specific organizational improvements were included in the President’s fiscal year 2019 budget, released in February 2018, OMB published additional government-wide and agency reform proposals in June 2018. The President’s Management Agenda (PMA), released in March 2018, outlines a long-term vision for modernizing federal operations and improving the ability of agencies to achieve outcomes. To address the issues outlined in the PMA, the administration established a number of cross-agency priority (CAP) goals. CAP goals, required by GPRAMA, are to address issues in a limited number of policy areas requiring action across multiple agencies, or management improvements that are needed across the government. The PMA highlights several root causes for the challenges the federal government faces. Among them is that agencies do not consistently apply data-driven decision-making practices. The PMA states that smarter use of data and evidence is needed to orient decisions and accountability around service and results. To that end, in March 2018, the administration established the Leveraging Data as a Strategic Asset CAP goal to improve the use of data in decision making to increase the federal government’s effectiveness. Over the past 25 years, various organizations, roles, and responsibilities have been created by executive action or in law to provide leadership in federal performance management. At individual agencies and across the federal government, these organizations and officials have key responsibilities for improving performance, as outlined below. OMB: At least every four years, OMB is to coordinate with other agencies to develop CAP goals—such as the one described earlier on leveraging data as an asset—to improve the performance and management of the federal government. OMB is also required to coordinate with agencies to develop annual federal government performance plans to define, among other things, the level of performance to be achieved toward the CAP goals. Following GPRAMA’s enactment, OMB issued guidance for initial implementation, as required by the act, and continues to provide updated guidance in its annual Circular No. A-11, additional memorandums, and other means. Chief Operating Officer (COO): The deputy agency head, or equivalent, is designated as the COO, with overall responsibility for improving agency management and performance through, among other things, the use of performance information. President’s Management Council (PMC): The PMC is comprised of OMB’s Deputy Director for Management and the COOs of major departments and agencies, among other individuals. Its responsibilities include improving overall executive branch management and implementing the PMA. Performance Improvement Officer (PIO): Agency heads designate a senior executive as the PIO, who reports directly to the COO. The PIO is responsible for assisting the head of the agency and COO to ensure that agency goals are achieved through, among other things, the use of performance information. Performance Improvement Council (PIC): The PIC is charged with assisting OMB to improve the performance of the federal government. It is chaired by the Deputy Director for Management at OMB and includes PIOs from each of the 24 Chief Financial Officers Act agencies, as well as other PIOs and individuals designated by the chair. Among its responsibilities, the PIC is to work to resolve government-wide or cross-cutting performance issues, and facilitate the exchange among agencies of practices that have led to performance improvements. Previously, the General Service Administration’s (GSA) Office of Executive Councils provided analytical, management, and administrative support for the PIC, the PMC, and other government-wide management councils. In January 2018, the office was abolished and its functions, staff, and authorities, along with those of the Unified Shared Services Management Office, were reallocated to GSA’s newly created Shared Solutions and Performance Improvement Office. As at the government-wide level—where, as described earlier, the use of performance information did not change from 2013 to 2017—managers’ reported use of performance information at most agencies also did not improve since 2013 (illustrated in figure 3). At the agency level, 3 of the 24 agencies had statistically significant changes in their index scores—1 increase (National Science Foundation) and 2 decreases (Social Security Administration and the Office of Personnel Management). Also, in 2017, 6 agencies had results that were statistically significantly different—4 higher and 2 lower—than the government-wide average (see sidebar). Throughout the report, we highlight two different types of statistically significant results—changes from our last survey in 2013 and differences from the 2017 government-wide average. The former indicates when an agency’s reported use of performance information or leading practices has measurably improved or declined. The latter indicates when it is statistically significantly higher or lower than the rest of government. These results suggest agencies have taken actions that led to improvements in their use of performance information. For example, when a result is a statistically significant increase since 2013, as with the National Science Foundation index score in 2017, this suggests that the agency has adopted practices that led to a measurable increase in the use of performance information by managers. When a result is statistically significantly higher than the government-wide average, like GSA’s 2017 index score, this suggests that the agency’s use of performance information is among the highest results when compared to the rest of government. These agencies could also have insights into practices that led to relatively high levels of performance information use. Finally, when a result is a statistically significant decrease since 2013, as with the Social Security Administration’s index score in 2017, or statistically significantly lower than the government-wide average, like the Department of Homeland Security’s 2017 index score, this suggests the agencies face challenges that are hampering their ability to use performance information. Appendix III provides each agency’s index scores from 2007, 2013, and 2017 to show changes between survey years. When we disaggregated the index and analyzed responses from the 11 questions that comprise the index—which could help pinpoint particular actions that improved the use of performance information—we similarly found relatively few changes in agencies’ recent results. Specifically, we identified 16 instances where agency responses on individual questions were statistically significantly different from 2013 to 2017—10 increases and 6 decreases. This represents about 6 percent of the total possible responses to the 11 survey questions from each of the agencies. In addition, we found 12 instances where an agency’s result on a question was statistically significantly higher (11) or lower (1) than the government-wide average in 2017. For example, the percentage of Social Security Administration (SSA) managers reporting that their peers use performance information to share effective approaches was statistically significantly higher than the government-wide average. Although SSA’s index score had a statistically significant decline in 2017 compared to 2013, the agency’s index score remains relatively high, as it has in prior years. The scope of our work has not allowed us to determine definitively what factors caused the decline in SSA’s index score and whether the decline is likely to continue, although its result on this particular question may indicate a continued strength. Each agency’s results on the 11 questions that comprise the index are presented in appendix I. The agencies’ respective statistically significant results are identified in figure 4. While some agencies had statistically significant improvements on individual questions, and could point to actions that led to improvements in their use of performance information, these improvements should be considered in relation to the range of agency results and the government- wide average. In figure 4, there are five agencies with statistically significant increases on responses to individual questions, where those results were not statistically significantly higher than the government-wide average (see arrows without plus signs for the Departments of Agriculture, Defense, and Justice; the Environmental Protection Agency; and the National Science Foundation). While these represent improvements, they should be considered in relation to the range of agency results and the government-wide average (provided in detail in the agency summaries in appendix I). For example, in 2017, the percentage of managers at the Department of Agriculture who reported that upper management use performance information to inform decisions about program changes was statistically significantly higher than in 2013. However, the department’s 2017 result (37 percent) was relatively lower when compared to the maximum agency result on that question (60 percent). Appendix I presents the results on the index and the 11 questions that comprise it for each of the 24 agencies. When we compared government-wide and agency-level results on selected survey questions that reflect practices that promote the use of performance information, we found that results between 2013 and 2017 generally remained unchanged. As described earlier, there are 10 survey questions that both reflect the five leading practices identified in our past work and had statistically significant associations with higher index scores. As shown in figure 5, government-wide results on 2 of the 10 questions were statistically significantly different, both increases, from 2013 to 2017. Despite these two increases, the overall results suggest these practices are not widely followed government-wide. On most of the 10 questions, only about half (or fewer) of the managers reported their agencies were following them to a “great” or “very great” extent. When we analyzed agency-level responses to these 10 questions, we also found relatively few changes in recent results. Specifically, our analysis found 20 instances—16 increases and 4 decreases—where agencies’ responses on individual questions were statistically significantly different from 2013 to 2017. This represents about 8 percent of the total possible responses to the 10 survey questions from each of the agencies. In addition, we found 10 instances where an agency’s result on a question was statistically significantly higher (8) or lower (2) than the government-wide average in 2017. Each agency’s results on these 10 questions are presented in appendix I, and the statistically significant results are identified in figure 6. Those agencies with results on individual questions that are either statistically significantly higher than 2013, higher than the 2017 government-wide average, or both may have taken actions in line with our leading practices for promoting the use of performance information. For example, the National Science Foundation had both types of statistically significant results on a question about having sufficient information on the validity of their performance data. Here, the agency’s result increased 27 percentage points from 2013 to 2017. While the scope of our review does not allow us to definitively determine the reasons for the National Science Foundation’s higher results, they suggest the agency has taken recent actions that greatly improved the availability and accessibility of information on the validity of performance data. In both 2013 and 2017, our analyses found this particular question to be the strongest predictor of higher performance information use when we tested for associations between the questions that reflect leading practices and our index. Our 2017 survey results show that managers who reported their programs were subject to data-driven reviews also were more likely to report using performance information in decision making to a greater extent (see figure 7). For the 35 percent of managers who reported being familiar with data-driven reviews, those who reported their programs had been subject to data-driven reviews to a “great” or “very great” extent had index scores that were statistically significantly higher than those whose programs were subject to these reviews to a lesser extent. Similarly, we found that being subject to data-driven reviews to a greater extent was also related to greater reporting of agencies following practices that can promote the use of performance information. As figure 8 shows, managers who reported their programs were subject to these reviews to a “great” or “very great” extent more frequently reported that their agencies followed the five leading practices that promote the use of performance information, as measured by the 10 related survey questions associated with higher scores on the index. For example, of the estimated 48 percent of managers who reported their programs were subject to data-driven reviews to a “great” or “very great” extent, 72 percent also reported that managers at their level (peers) effectively communicate performance information on a routine basis to a “great” or “very great” extent. Conversely, for the 24 percent of managers who reported their programs were subject to data-driven reviews to a “small” or “no” extent, only 30 percent reported that managers at their level do this to a “great” or “very great” extent. Our past work has found that the Executive Branch has taken steps to improve the use of performance information in decision making by senior leaders at federal agencies. However, our survey results indicate those steps have not led to similar improvements in use by managers at lower levels. Through its guidance to implement GPRAMA, OMB developed a framework for performance management in the federal government that involves agencies setting goals and priorities, measuring performance, and regularly reviewing and reporting on progress. This includes expectations for how agency senior leaders should use performance information to assess progress towards achieving agency priority goals through data-driven reviews, and strategic objectives through strategic reviews. For example, GPRAMA requires, and OMB’s guidance reinforces, that data-driven reviews should involve the agency head, Chief Operating Officer, Performance Improvement Officer, and other senior officials responsible for leading efforts to achieve each goal. OMB’s guidance also identifies ways in which agency leaders should use the results of those reviews to inform various decision-making activities, such as revising strategies, formulating budgets, and managing risks. Our past work also found that agencies made progress in implementing these reviews and using performance information. In July 2015, we found that agencies generally were conducting their data-driven reviews in line with GPRAMA requirements and our related leading practices, including that agency leaders used the reviews to drive performance improvement. In addition, in September 2017, we reported on selected agencies’ experiences in implementing strategic reviews and found that the reviews helped direct leadership attention to progress on strategic objectives. Despite those findings, our survey results continue to show that the reported use of performance information by federal managers has generally not improved, and actually declined at some agencies. This could be because of the two different groups of agency officials covered by our work. GPRAMA’s requirements, and the federal performance management framework established by OMB’s guidance, apply at the agency-wide level and generally involve senior leaders. Our past work reviewing implementation of the act therefore focused on improvements in the use of performance information by senior leaders at the agency- wide level. In contrast, our surveys covered random samples of mid- and upper-level managers within those agencies, including at lower organizational levels such as component agencies. Their responses indicate that the use of performance information more broadly within agencies—at lower organizational levels—generally has not improved over time. The exception to this was managers whose programs were subject to the data-driven reviews required by GPRAMA. As described above, those managers were more likely to report greater use of performance information in their agencies. This reinforces the value of the processes and practices put in place by GPRAMA. Our survey results suggest that limited actions have been taken to diffuse processes and practices related to the use of performance information to lower levels within federal agencies, where mid-level and senior managers make decisions about managing programs and operations. Although OMB staff agreed that diffusing processes and practices to lower levels could lead to improved use of performance information, they told us they have not directed agencies to do so for a few reasons. First, OMB staff expressed concerns about potentially imposing a “one-size-fits- all” approach on agencies. They stated that agencies are best positioned to improve their managers’ use of performance information, given their individual and unique missions and cultures, and the environments in which they operate. We agree that it makes sense for agencies to be able to tailor their approaches for those reasons. OMB’s existing guidance provides an overarching framework that recognizes the need for flexibility and for agencies to tailor their approaches. Moreover, given the long- standing and cross-cutting nature of this challenge, a government-wide approach also would provide a consistent focus on improving the use of performance information more extensively within agencies. OMB staff also told us that they believed it would go beyond their mandate to direct agencies to extend GPRAMA requirements to lower levels. GPRAMA requires OMB to provide guidance to agencies to implement its requirements, which only apply at the agency-wide level. As noted earlier, however, GPRAMA also requires OMB to develop cross- agency priority (CAP) goals to improve the performance and management of the federal government. The President’s Management Agenda established a CAP goal to leverage data as a strategic asset, in part, to improve the use of data for decision making and accountability throughout the federal government. This new CAP goal presents an opportunity for OMB and agencies to identify actions to expand the use of performance information in decision making throughout agencies. As of June 2018, the action plan for implementing the Leveraging Data as a Strategic Asset CAP goal is limited. According to the President’s Management Agenda and initial CAP goal action plan, the goal primarily focuses on developing and implementing a long-term, enterprise-wide federal data strategy to better govern and leverage the federal government’s data. It is through this strategy that, among other things, the administration intends to improve the use of data for decision making and accountability. However, the strategy is under development and not expected to be released until January 2019, with a related plan to implement it expected in April 2019. The existing action plan, released in March 2018 and updated in June 2018, does not yet include specific steps needed to improve the use of data—including performance information—more extensively within agencies. According to the action plan for the goal, potential actions currently under consideration focus on establishing agency “learning agendas” that prioritize the development and use of data and other evidence for decision-making; building agency capacity to use data and other evidence; and improving the timeliness of performance information and other data, and making that information available to decision makers and the public. Although developing learning agendas and building capacity could help improve the use of performance information in agencies, improving availability of data may be less effective. For example, as our past survey results have shown, increasing the availability of performance information has not resulted in corresponding increases in its use in decision making. We recognize that the CAP goal was created in March 2018. Nonetheless, it is important that OMB and its fellow goal leaders develop the action plan and related federal data strategy consistent with all key requirements to better ensure successful implementation. The action plan does not yet include complete information related to the following GPRAMA requirements: performance goals that define the level of performance to be achieved each year for the CAP goal; the various federal agencies, organizations, programs, and other activities that contribute to the CAP goal; performance measures to assess overall progress towards the goal as well as the progress of each agency, program, and other activity contributing to the goal; and clearly defined quarterly targets. Consistent with GPRAMA, Standards for Internal Control in the Federal Government identifies information that agencies are required to include in their plans to help ensure they achieve their goals. The standards state that objectives—such as improving the use of data in decision making— should be clearly defined to enable the identification of risks. Objectives are to be defined in specific terms so they can be understood at all levels of the entity—in this case, government-wide as well as within individual agencies. This involves defining what is to be achieved, who is to achieve it, how it will be achieved, and the time frames for achievement. Ensuring that future updates to the new CAP goal’s action plan includes all required elements is particularly important, as our previous work has found that some past CAP goal teams did not meet all planning and reporting requirements. For example, in May 2016 we found that most of the CAP goal teams we reviewed had not established targets for all performance measures they were tracking. This limited the transparency of their efforts and the ability to track progress toward established goals. We recommended that OMB, working with the Performance Information Council (PIC), report on actions that CAP goal teams are taking, or plan to take, to develop such targets and performance measures. OMB staff generally agreed and, in July 2017, told us they were working, where possible, to assist the development of measures for CAP goals. However, the recommendation has not been addressed and OMB staff said the next opportunity to address it would be when the administration established new CAP goals (which took place in March 2018). Following the initial release of the new CAP goals, CAP goal teams are to more fully develop the related action plans through quarterly updates. Given the ongoing importance of meeting these planning and reporting requirements, we will continue to monitor the status of actions to address this recommendation as implementation of the new CAP goals proceeds. While the PIC, which is chaired by OMB, has contributed to efforts to enhance the use of performance information, our survey results identify additional opportunities to further those efforts. The PIC’s past efforts have included hosting various working groups and learning events for agency officials to provide performance management guidance, and developing resources with relevant practices. For example, the PIC created a working group focused on agency performance reviews, which was used to share recommendations for how agencies can implement reviews, along with a guide with practices for effectively implementing strategic reviews. In January 2018, staff supporting the PIC joined with staff from another GSA office to create a new group called Fed2Fed Solutions. This group consults with agencies and provides tailored support, such as data analysis and performance management training for agency officials, to help them address specific challenges related to organizational transformation, data-driven decision making, and other management improvement efforts. Our survey results identify useful information related to potential promising practices and challenges that OMB and the PIC could use to inform efforts to enhance the use of performance information more extensively within agencies (e.g., at lower levels). As was previously described, the PIC has responsibilities to (1) facilitate the exchange among agencies of proven practices, and (2) work to resolve government- wide or cross-cutting performance issues, such as challenges. Our analyses of 2017 survey results identified instances where agencies may have found effective ways to enhance the use of performance information by agency leaders and managers in decision making, as well as instances where agencies (and their managers) face challenges in doing so. Specifically, based on analyses of our survey responses, we identified 14 agencies that may have insights into specific practices that led to recent improvements in managers’ use of performance information, or ways that they maintain relatively high levels of use by their managers when compared to the rest of the government. Figure 9 summarizes the agencies identified earlier in the report that had statistically significant increases, or results higher than the government-wide average, on our index or individual survey questions. As the figure shows, several agencies had statistically significant results across all three sets of analyses and therefore may have greater insights to offer: the General Services Administration, National Aeronautics and Space Administration, and the National Science Foundation. In addition, our analyses identified nine agencies where results suggest managers face challenges that have hampered their ability to use performance information. Figure 10 summarizes the agencies identified earlier in the report that had statistically significant decreases, or results lower than the government-wide average, on our index or individual survey questions. As the figure shows, the Office of Personnel Management had statistically significant decreases in all three sets of analyses. Four agencies—the Departments of the Treasury and Veterans Affairs, the Nuclear Regulatory Commission, and the Social Security Administration—were common to both of the figures above. That is, they had results that indicate they may have insights on some aspects of using performance information and face challenges in other aspects. As was mentioned earlier, to provide proper context, these results should be considered in relation to the range of agency results and the government- wide average (provided in detail in the agency summaries in appendix I). Given the prioritization of other activities, such as the recent creation of the Fed2Fed Solutions program, the PIC has not yet undertaken a systematic approach that could improve the use of performance information by managers at lower levels within agencies. Such an approach would involve identifying and sharing practices that have led to improved use, as well as identifying common or cross-cutting challenges that have hampered such use. The results of our analyses could help the PIC do so, and in a more targeted manner. By identifying and sharing proven practices, the PIC could further ensure that agency leaders and managers are aware of effective or proven ways they can use performance information to inform their decisions across the spectrum of activities they manage within their agencies. Those proven practices also may help agency leaders and managers resolve any identified challenges. Furthermore, in September 2017, we found that, for the estimated 35 percent of managers who reported familiarity with data-driven reviews, the more they viewed their programs being subject to a review, the more likely they were to report the reviews were driving results and were conducted in line with our leading practices for using performance information. Despite the reported benefits of and results achieved through data-driven reviews, they were not necessarily widespread. As noted above, GPRAMA requires agencies to conduct such reviews for agency priority goals, which represent a small subset of goals, and they are required at the departmental level. These reasons may explain why most managers reported they were not familiar with the reviews. As a result, we recommended that OMB should work with the PIC to identify and share among agencies practices for expanding the use of data-driven reviews. OMB staff agreed with our recommendation but have yet to address it. In June 2018, OMB updated its annual guidance to agencies to explicitly encourage them to expand data-driven reviews to include other goals, priorities, and management areas as applicable to improve organizational performance. However, as of June 2018, OMB and the PIC have yet to take any steps to identify and share practices for expanding the use of these reviews in line with our recommendation. Given the additional analyses we conducted for this report—which show that being subject to data-driven reviews is related to greater reported use of performance information and leading practices that promote such use—we continue to believe these further actions would help agencies implement these reviews more extensively. We reiterate the importance of the September 2017 recommendation and will continue to monitor OMB’s progress to address it. For more than 20 years, our work has highlighted weaknesses in the use of performance information in federal decision making. While the Executive Branch has taken some actions in recent years, such as establishing a framework for performance management across the federal government, our survey results underscore that more needs to be done to improve the use of performance information more extensively within agencies and government-wide. The President’s Management Agenda and its related CAP goal to leverage data as a strategic asset present an opportunity to do so, as it aims to improve data-driven decision making. As OMB and its fellow goal leaders more fully develop the action plan for achieving this goal, providing additional details for its plans to improve data-driven decision making would help provide assurance that it can be achieved. As part of those initiatives, our survey results could provide a useful guide for targeting efforts. Officials at each agency could use these results to identify areas for additional analysis and potential actions that could help improve the use of performance information across the agency and at lower levels. Similarly, OMB and the PIC could use the results to identify broader issues in need of government-wide attention. It will also be important, however, for OMB and the PIC to go beyond this analysis and work with agencies to identify and share proven practices for increasing the use of performance information at lower levels within agencies, as well as challenges that may be hampering agencies’ ability to do so. We are making the following two recommendations to OMB: The Director of OMB should direct the leaders of the Leveraging Data as a Strategic Asset CAP Goal to ensure future updates to the action plan, and the resulting federal data strategy, provide additional details on improving the use of data, including performance information, more extensively within federal agencies. The action plan should identify performance goals; contributing agencies, organizations, programs, and other activities; those responsible for leading implementation within these contributors; planned actions; time frames; and means to assess progress. (Recommendation 1) The Director of OMB, in coordination with the PIC, should prioritize efforts to identify and share among agencies proven practices for increasing, and challenges that hamper, the use of performance information in decision making more extensively within agencies. At a minimum, this effort should involve the agencies that our survey suggests may offer such insights. (Recommendation 2) We provided a draft of this report to the Director of the Office of Management and Budget for review and comment. We also provided a draft of the report to the heads of each of the 24 federal agencies covered by our survey. OMB had no comments, and informed us that it would assess our recommendations and consider how best to respond. We are sending copies of this report to congressional requesters, the Director of the Office of Management and Budget, the heads of each of the 24 agencies, and other interested parties. This report will also be available at no charge on the GAO website at http://www.gao.gov. If you or your staff have any questions about this report, please contact me at (202) 512-6806 or mcneilt@gao.gov. Contact points for our Offices of Congressional Relations and Public Affairs may be found on the last page of our report. Key contributors to this report are listed in appendix IV. (USDA) (Goverment-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Commerce) (Goverment-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Goverment-wide) (DOD) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Education) (Goverment-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (Energy) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (HHS) (Goverment-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (DHS) (Goverment-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (HUD) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Interior) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (DOJ) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (DOL) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (State) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (DOT) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Treasury) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (VA) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Goverment-wide) (USAID) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (EPA) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (GSA) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (NASA) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (NSF) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (NRC) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (OPM) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (SBA) (Government-wide) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” (Government-wide) (SSA) 10. The individual I report to 11. Employees that report to me 0 Percent of managers reporting “Great” or “Very Great” This report responds to a request that we analyze agency-level results from our 2017 survey of federal managers at the 24 agencies covered by the Chief Financial Officers (CFO) Act of 1990, as amended, to determine the extent agencies are using performance information. This report assesses the extent to which: 1. the reported use of performance information and related leading practices at 24 agencies has changed compared to our prior survey in 2013; 2. being subject to data-driven reviews related to managers’ reported use of performance information and leading practices; and 3. the Executive Branch has taken actions to enhance agencies’ use of performance information in various decision-making activities. From November 2016 through March 2017, we administered our online survey to a stratified random sample of 4,395 individuals from a population of 153,779 mid- and upper-level civilian managers and supervisors at the 24 CFO Act agencies. The management levels covered general schedule (GS) or equivalent schedules at levels comparable to GS-13 through GS-15, and career Senior Executive Service (SES) or equivalent. We obtained the sample from the Office of Personnel Management’s Enterprise Human Resources Integration database as of September 30, 2015—the most recent fiscal year data available at the time. The sample was stratified by agency and whether the manager or supervisor was a member of the SES. To help determine the reliability and accuracy of the database elements used to draw our sample of federal managers for the 2017 survey, we checked the data for reasonableness and the presence of any obvious or potential errors in accuracy and completeness and reviewed our past analyses of the reliability of this database. We concluded in our September 2017 report that the data used to draw our sample were sufficiently reliable for the purpose of the survey. For the 2017 survey, we received usable questionnaires from about 67 percent of the eligible sample. The weighted response rate at each agency generally ranged from 57 percent to 82 percent, except the Department of Justice, which had a weighted response rate of 36 percent. The overall survey results are generalizable to the population of managers government-wide and at each individual agency. To assess the potential bias from agencies with lower response rates, we conducted a nonresponse bias analysis using information from the survey and sampling frame as available. The analysis confirmed discrepancies in the tendency to respond to the survey related to agency and SES status. The analysis also revealed some differences in response propensity by age and GS level; however, the direction and magnitude of the differences on these factors were not consistent across agencies or strata. Our data may be subject to bias from unmeasured sources for which we cannot control. Results, and in particular estimates from agencies with low response rates such as the Department of Justice, should be interpreted with caution. However, the survey’s results are comparable to five previous surveys we conducted in 1997, 2000, 2003, 2007, and 2013. To address the first objective, we used data from our 2017 survey to update agency scores on our use of performance information index. This index, which was last updated using data from our 2013 survey, averages managers’ responses on 11 questions related to the use of performance information for various management activities and decision making. Using 2017 survey data, we conducted statistical analyses to ensure these 11 questions were still positively correlated. That analysis confirmed that no negative correlations existed and therefore no changes to the index were needed. Figure 11 shows the questions that comprise the index. After calculating agency index scores for 2017, we compared them to previous results from 2007 and 2013, and to the government-wide average for 2017, to identify any statistically significant differences. We focus on statistically significant results because these indicate that observed relationships between variables and differences between groups are likely to be valid, after accounting for the effects of sampling and other sources of survey error. For each of the 11 questions that comprise the index, we identified individual agency results, excluding missing and no basis to judge responses, and determined when they were statistically significantly different from (1) the agency’s results on the same question in 2013, or (2) the government-wide average results on the question in 2017. In this report, we analyzed and summarized the results of our 2017 survey of federal managers. Due to the limited scope of the engagement, we did not conduct additional audit work to determine what may have caused statistically significant changes between our 2017 and past survey results. To further address this objective we completed several statistical analyses that allowed us to assess the association between the index and 22 survey questions that we determined relate to leading practices we previously found promote the use of performance information. See figure 12 for the 22 specific questions related to these five practices that we included in the analysis. When we individually tested these 22 survey questions (bivariate regression), we found that each was statistically significantly and positively related to the index in 2017. This means that each question, when tested in isolation from other factors, was associated with higher scores on the index. However, when all 22 questions were tested together (multivariate regression), we found that 5 questions continued to be positively and significantly associated with the index in 2017, after controlling for other factors. To conduct this multivariate analysis, we began with a base model that treated differences in managers’ views of agency performance management use as a function of the agency where they worked. We found, however, that a model based on agency alone had little predictive power (R-squared of 0.04). We next examined whether managers’ responses to these questions reflecting practices that promote the use of performance information related to their perceptions of agency use of performance information, independent of agency. The results of this analysis are presented in table 1 below. Each coefficient reflects the increase in our index associated with a one-unit increase in the value of a particular survey question. Our final multivariate regression model had an R-squared of 0.67, suggesting that the variables in this model explain approximately 67 percent of the variation in the use index. We also tested this model controlling for whether a respondent was a member of the SES and found similar results. As shown above in table 1, five questions related to three of the leading practices that promote agencies’ use of performance information were statistically significant in 2017. These results suggest that, when controlling for other factors, certain specific efforts to increase agency use of performance information—such as providing information on the validity of performance data—may have a higher return and lead to higher index scores. With respect to aligning agency-wide goals, objectives, and measures, we found that each increase in terms of the extent to which individuals felt that managers aligned performance measures with agencywide goals and objectives was associated with a 0.08 increase in their score on the use index. In terms of improving the usefulness of performance information, we found that having information on the validity of performance data for decision making was the strongest predictor in our model (0.18). As measured here, taking steps to ensure the performance information is useful and appropriate was associated with almost as large a change in a managers’ index score (0.16). In terms of developing agency capacity to use performance information, we found that having sufficient analytical tools to collect, analyze, and use performance information (0.07), and providing or paying for training that would help link their programs to achievement of agency strategic goals (0.10), were also statistically significantly related to a manager’s reported use of performance information. When we combined these results with what we previously found through a similar analysis of 2013 survey results in September 2014, we identified 10 questions that have had a statistically significant association with higher index scores. This reinforces the importance of the five leading practices to promote the use of performance information. For each of these questions, which are outlined in figure 13 below, we determined when agency results were statistically significantly different from 2013 results or the 2017 government-wide average. For the second objective, we examined, based on the extent they responded their programs had been subject to agency data-driven reviews, differences in managers’ use index scores and responses on questions related to practices that promote the use of performance information. We grouped managers based on the extent they reported their programs had been subject to these reviews, from “no extent” through “very great extent.” We then calculated the average index scores for the managers in each of those five categories. We also examined differences in how managers responded to the 10 questions reflecting practices that can promote the use of performance information based on the extent they reported their programs had been subject to data-driven reviews. We grouped managers into three categories based on the extent they reported their programs had been subject to these reviews (no-small extent, moderate extent, great-very great extent). We then compared how these groups responded to the ten questions. For the third objective, we reviewed our past work that assessed Executive Branch activities to enhance the use of performance information; various resources (i.e., guidance, guides, and playbooks) developed by the Office of Management and Budget (OMB) and the Performance Improvement Council (PIC) that could support agencies’ use of performance information; and the President’s Management Agenda, and related materials with information on cross-agency efforts to improve the use of data in federal decision making. Lastly, for the third objective we also interviewed OMB and PIC staff about any actions they have taken, or planned to take, to further support the use of performance information across the federal government. We conducted this performance audit from October 2017 to September 2018 in accordance with generally accepted government auditing standards. Those standards require that we plan and perform the audit to obtain sufficient, appropriate evidence to provide a reasonable basis for our findings and conclusions based on our audit objectives. We believe that the evidence obtained provides a reasonable basis for our findings and conclusions based on our audit objectives. In addition to the above contact, Benjamin T. Licht (Assistant Director) and Adam Miles (Analyst-in-Charge) supervised this review and the development of the resulting report. Arpita Chattopadhyay, Caitlin Cusati, Meredith Moles, Dae Park, Amanda Prichard, Steven Putansu, Alan Rozzi, Shane Spencer, and Khristi Wilkins also made key contributions. Robert Robinson developed the graphics for this report. Alexandra Edwards, Jeff DeMarco, Mark Kehoe, Ulyana Panchishin, and Daniel Webb verified the information presented in this report. Results of the Periodic Surveys on Organizational Performance and Management Issues Managing for Results: Further Progress Made in Implementing the GPRA Modernization Act, but Additional Actions Needed to Address Pressing Governance Challenges. GAO-17-775. Washington, D.C.: September 29, 2017. Supplemental Material for GAO-17-775: 2017 Survey of Federal Managers on Organizational Performance and Management Issues. GAO-17-776SP. Washington, D.C.: September 29, 2017. Program Evaluation: Annual Agency-wide Plans Could Enhance Leadership Support for Program Evaluations. GAO-17-743. Washington, D.C.: September 29, 2017. Managing for Results: Agencies’ Trends in the Use of Performance Information to Make Decisions. GAO-14-747. Washington, D.C.: September 26, 2014. Managing for Results: Executive Branch Should More Fully Implement the GPRA Modernization Act to Address Pressing Governance Challenges. GAO-13-518. Washington, D.C.: June 26, 2013. Managing for Results: 2013 Federal Managers Survey on Organizational Performance and Management Issues, an E-supplement to GAO-13-518. GAO-13-519SP. Washington, D.C.: June 26, 2013. Program Evaluation: Strategies to Facilitate Agencies’ Use of Evaluation in Program Management and Policy Making. GAO-13-570. Washington, D.C.: June 26, 2013. Government Performance: Lessons Learned for the Next Administration on Using Performance Information to Improve Results. GAO-08-1026T. Washington, D.C.: July 24, 2008. Government Performance: 2007 Federal Managers Survey on Performance and Management Issues, an E-supplement to GAO-08-1026T. GAO-08-1036SP. Washington, D.C.: July 24, 2008. Results-Oriented Government: GPRA Has Established a Solid Foundation for Achieving Greater Results. GAO-04-38. Washington, D.C.: March 10, 2004. Managing for Results: Federal Managers’ Views on Key Management Issues Vary Widely Across Agencies. GAO-01-592. Washington, D.C.: May 25, 2001. Managing for Results: Federal Managers’ Views Show Need for Ensuring Top Leadership Skills.GAO-01-127. Washington, D.C.: October 20, 2000. The Government Performance and Results Act: 1997 Governmentwide Implementation Will Be Uneven. GAO/GGD-97-109. Washington, D.C.: June 2, 1997.
+
+    Now, write a one-page summary of the report.
+
+    Summary:
